@@ -15,16 +15,17 @@ def home():
 
 @socketio.on('connect')
 def connect():
-    players.append(request.sid)
-    emit('my response', {'data': 'Connected, ' + str(request.sid)})
-    print(request.sid)
+    id = request.sid
+    players.append(id)
+    emit('confirm', {'data': 'Connected, ' + request.sid})
+    print('CONNECT:    ' + id)
 
 
 @socketio.on('disconnect')
 def disconnect():
-    print('Client disconnected')
-    players.remove(request.sid)
-    print('removed ' + str(request.sid))
+    id = request.sid
+    players.remove(id)
+    print('DISCONNECT: ' + id)
 
 if __name__ == "__main__":
     socketio.run(app)

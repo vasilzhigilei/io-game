@@ -6,20 +6,61 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" charset="utf-8">
-        var c = document.getElementById("myCanvas"); // Canvas
+        // NETWORKING AND SOCKETIO CODE
         var socket = io();
-        socket.on('my response', function(data) {
-            // update things here?
+        socket.on('confirm', function(data) {
+            // confirms events such as client connection to the server
             console.log(data);
         });
     </script>
 </head>
 
 <body class="background">
-<canvas id="myCanvas" style="width: 100%; height: 100%; border:1px solid #000000;">
-
-
-
+<canvas id="myCanvas" style="border:1px solid #000000;">
 </canvas>
+<script>
+    // GAME CONTROL
+
+    var canvas = document.getElementById("myCanvas"); // Canvas
+    canvas.width = window.innerWidth = document.body.clientWidth;
+    canvas.height = window.innerHeight = document.body.clientHeight;
+    var context = canvas.getContext("2d"); // 2d context
+
+    var deltaX = 0, deltaY = 0;
+    drawCircle();
+    window.addEventListener("keydown", moveSomething, false);
+    function moveSomething(e) {
+        switch(e.keyCode) {
+            case 37:
+                // left key pressed
+                deltaX -= 2;
+                break;
+            case 38:
+                // up key pressed
+                deltaY -= 2;
+                break;
+            case 39:
+                // right key pressed
+                deltaX += 2;
+                break;
+            case 40:
+                // down key pressed
+                deltaY += 2;
+                break;
+        }
+        drawCircle();
+    }
+
+    function drawCircle() {
+        console.log(canvas.width, canvas.height);
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        context.beginPath();
+        context.arc(canvas.width/2 + deltaX, canvas.height/2 + deltaY, 50, 0, 2 * Math.PI, false);
+        context.fillStyle = 'blue';
+        context.fill();
+        context.closePath();
+    }
+</script>
 </body>
 </html>
