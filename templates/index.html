@@ -15,16 +15,16 @@
     </script>
 </head>
 
-<body class="background">
-<canvas id="myCanvas" style="border:1px solid #000000;">
+<body>
+<canvas id="myCanvas" style="background: white;">
 </canvas>
 <script>
     // GAME CONTROL
 
     var canvas = document.getElementById("myCanvas"); // Canvas
-    canvas.width = window.innerWidth = document.body.clientWidth;
-    canvas.height = window.innerHeight = document.body.clientHeight;
     var context = canvas.getContext("2d"); // 2d context
+    context.canvas.width  = window.innerWidth;
+    context.canvas.height = window.innerHeight;
 
     var deltaX = 0, deltaY = 0;
     drawCircle();
