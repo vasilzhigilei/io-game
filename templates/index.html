@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<canvas id="myCanvas" style="background: white;">
+<canvas id="myCanvas">
 </canvas>
 <script>
     // GAME CONTROL
@@ -28,28 +28,38 @@
 
     var deltaX = 0, deltaY = 0;
     drawCircle();
-    window.addEventListener("keydown", moveSomething, false);
-    function moveSomething(e) {
-        switch(e.keyCode) {
-            case 37:
-                // left key pressed
-                deltaX -= 2;
-                break;
-            case 38:
-                // up key pressed
-                deltaY -= 2;
-                break;
-            case 39:
-                // right key pressed
-                deltaX += 2;
-                break;
-            case 40:
-                // down key pressed
-                deltaY += 2;
-                break;
+
+    window.addEventListener("keydown", keysPressed, false);
+    window.addEventListener("keyup", keysReleased, false);
+
+    var keys = [];
+    function keysPressed(e) {
+        // store an entry for every key pressed
+        keys[e.keyCode] = true;
+        // left
+        if (keys[37]) {
+          deltaX -= 2;
         }
+        // right
+        if (keys[39]) {
+          deltaX += 2;
+        }
+        // down
+        if (keys[38]) {
+          deltaY -= 2;
+        }
+        // up
+        if (keys[40]) {
+          deltaY += 2;
+        }
+        e.preventDefault();
         drawCircle();
     }
+
+    function keysReleased(e) {
+        // mark keys that were released
+        keys[e.keyCode] = false;
+    }       
 
     function drawCircle() {
         console.log(canvas.width, canvas.height);
