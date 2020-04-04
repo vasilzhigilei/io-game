@@ -15,18 +15,16 @@ def home():
 
 @socketio.on('connect')
 def connect():
-    emit('my response', {'data': 'Connected'})
+    players.append(request.sid)
+    emit('my response', {'data': 'Connected, ' + str(request.sid)})
+    print(request.sid)
+
 
 @socketio.on('disconnect')
-def disconnect(data):
+def disconnect():
     print('Client disconnected')
-    players.remove(data['name'])
-    print('removed ' + data['name'])
-
-@socketio.on('name event')
-def receive_name(json):
-    print('received json: ' + str(json))
-    emit('toclient', json)
+    players.remove(request.sid)
+    print('removed ' + str(request.sid))
 
 if __name__ == "__main__":
     socketio.run(app)
