@@ -34,31 +34,49 @@
         keyState[e.keyCode || e.which] = false;
     },true);
 
+    var keys = [0, 0];
+    var speed = 2; // 2 pixels per movement
     var deltaX = 0, deltaY = 0;
     function gameLoop() {
         if (keyState[37] || keyState[65]){
             // LEFT or A
-            deltaX -= 2;
+            keys[0] = -1;
         }
         if (keyState[39] || keyState[68]){
             // RIGHT or D
-            deltaX += 2;
+            if(keys[0] == -1){
+                keys[0] = 0;
+            }else{
+                keys[0] = 1;
+            }
         }
         if (keyState[40] || keyState[83]){
             // UP or W
-            deltaY += 2;
+            keys[1] = 1;
         }
         if (keyState[38] || keyState[87]){
             // DOWN or S
-            deltaY -= 2;
+            if(keys[1] == 1){
+                keys[1] = 0;
+            }else{
+                keys[1] = -1;
+            }
         }
 
+        multiplier = 1; // diagonal multiplier
+        if(keys[0] != 0 && keys[1] != 0){
+            multiplier = 0.707;
+        }
+        deltaX += keys[0] * speed * multiplier; // DIRECTION * SPEED * MULTIPLIER
+        deltaY += keys[1] * speed * multiplier; // DIRECTION * SPEED * MULTIPLIER
 
-        // redraw/reposition your object here
-        // also redraw/animate any objects not controlled by the user
+        // redraw all objects here
         drawCircle();
 
-        setTimeout(gameLoop, 10);
+        // reset before next loop
+        keys = [0, 0]
+
+        setTimeout(gameLoop, 5);
     }
     gameLoop();
 
