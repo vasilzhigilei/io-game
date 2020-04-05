@@ -17,6 +17,7 @@ players = [] # dictionary format ---> {'id':id, 'x':x, 'y':y}
 def playerinfo(data):
     # called by client to update player data for everyone
     id = request.sid
+    print(players)
     player = next(item for item in players if item['id'] == id) # (..., None) for default & error management
     player['x'] = data['x'];
     player['y'] = data['y'];
@@ -43,7 +44,7 @@ def connect():
 @socketio.on('disconnect')
 def disconnect():
     id = request.sid
-    players.remove(id)
+    players.remove(id) # wrong, have to find dict that has id first, then remove it
     print('DISCONNECT: ' + id)
 
 if __name__ == "__main__":
