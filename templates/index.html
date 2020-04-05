@@ -36,7 +36,7 @@
 
     var keys = [0, 0];
     var speed = 2; // 2 pixels per movement
-    var deltaX = 0, deltaY = 0;
+    var deltaX = canvas.width/2, deltaY = canvas.height/2; // set initial positions to center of screen
     function gameLoop() {
         if (keyState[37] || keyState[65]){
             // LEFT or A
@@ -81,11 +81,12 @@
     gameLoop();
 
     function drawCircle() {
-        console.log(canvas.width, canvas.height);
+        context.setTransform(1, 0, 0, 1, 0, 0);
         context.clearRect(0, 0, canvas.width, canvas.height);
-
+        context.translate(-deltaX + canvas.width/2, -deltaY + canvas.height/2);
+        // everything else in game will be moved by deltaX and deltaY
         context.beginPath();
-        context.arc(canvas.width/2 + deltaX, canvas.height/2 + deltaY, 50, 0, 2 * Math.PI, false);
+        context.arc(deltaX, deltaY, 50, 0, 2 * Math.PI, false);
         context.fillStyle = 'blue';
         context.fill();
         context.closePath();
