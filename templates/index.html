@@ -71,7 +71,9 @@
         deltaY += keys[1] * speed * multiplier; // DIRECTION * SPEED * MULTIPLIER
 
         // redraw all objects here
-        drawCircle();
+        clear();
+        drawTrees();
+        drawCircle(); // draw circle must go last to overlay on top of other objects
 
         // reset before next loop
         keys = [0, 0]
@@ -80,16 +82,25 @@
     }
     gameLoop();
 
-    function drawCircle() {
+    function clear() {
         context.setTransform(1, 0, 0, 1, 0, 0);
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.translate(-deltaX + canvas.width/2, -deltaY + canvas.height/2);
+    }
+
+    function drawTrees() {
+        context.fillStyle = 'green';
+        context.fillRect(200, 200, 50, 50);
+        context.fillRect(500, 200, 50, 50);
+        context.fillRect(2000, 400, 50, 50);
+    }
+
+    function drawCircle() {
         // everything else in game will be moved by deltaX and deltaY
         context.beginPath();
         context.arc(deltaX, deltaY, 50, 0, 2 * Math.PI, false);
         context.fillStyle = 'blue';
         context.fill();
-        context.closePath();
     }
 </script>
 </body>
