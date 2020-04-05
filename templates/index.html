@@ -26,40 +26,41 @@
     context.canvas.width  = window.innerWidth;
     context.canvas.height = window.innerHeight;
 
+    var keyState = {};
+    window.addEventListener('keydown',function(e){
+        keyState[e.keyCode || e.which] = true;
+    },true);
+    window.addEventListener('keyup',function(e){
+        keyState[e.keyCode || e.which] = false;
+    },true);
+
     var deltaX = 0, deltaY = 0;
-    drawCircle();
+    function gameLoop() {
+        if (keyState[37] || keyState[65]){
+            // LEFT or A
+            deltaX -= 2;
+        }
+        if (keyState[39] || keyState[68]){
+            // RIGHT or D
+            deltaX += 2;
+        }
+        if (keyState[40] || keyState[83]){
+            // UP or W
+            deltaY += 2;
+        }
+        if (keyState[38] || keyState[87]){
+            // DOWN or S
+            deltaY -= 2;
+        }
 
-    window.addEventListener("keydown", keysPressed, false);
-    window.addEventListener("keyup", keysReleased, false);
 
-    var keys = [];
-    function keysPressed(e) {
-        // store an entry for every key pressed
-        keys[e.keyCode] = true;
-        // left
-        if (keys[37]) {
-          deltaX -= 2;
-        }
-        // right
-        if (keys[39]) {
-          deltaX += 2;
-        }
-        // down
-        if (keys[38]) {
-          deltaY -= 2;
-        }
-        // up
-        if (keys[40]) {
-          deltaY += 2;
-        }
-        e.preventDefault();
+        // redraw/reposition your object here
+        // also redraw/animate any objects not controlled by the user
         drawCircle();
-    }
 
-    function keysReleased(e) {
-        // mark keys that were released
-        keys[e.keyCode] = false;
-    }       
+        setTimeout(gameLoop, 10);
+    }
+    gameLoop();
 
     function drawCircle() {
         console.log(canvas.width, canvas.height);
