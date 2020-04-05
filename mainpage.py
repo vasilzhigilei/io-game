@@ -25,7 +25,11 @@ def playerinfo(data):
 @socketio.on('updateme')
 def updateme():
     # updates client with player data, only called by client, not force sent
-    emit('receiveUpdate', {'players': players}) # improve naming system for emits and receives, as well as data objects
+    id = request.sid
+    # this logic may be offset to client in later update to improve server performance
+    excludeSelf = [player for player in players if player.get('id') != id] # excludes self for other players
+    emit('receiveUpdate', {'players': excludeSelf})
+    # improve naming system for emits and receives, as well as data objects <--- note to self
 
 @socketio.on('newplayer')
 def newplayer(data):
@@ -44,7 +48,11 @@ def connect():
 @socketio.on('disconnect')
 def disconnect():
     id = request.sid
-    players.remove(id) # wrong, have to find dict that has id first, then remove it
+    # find and remove player from list of players
+    for player in players:
+        if player['id'] == id:
+            players.remove(player)
+            break
     print('DISCONNECT: ' + id)
 
 if __name__ == "__main__":
