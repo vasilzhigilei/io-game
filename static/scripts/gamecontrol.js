@@ -57,10 +57,10 @@ function gameLoop() {
     drawPlayers();
     drawUser(); // draw circle must go last to overlay on top of other objects
     counter++;
-    if(counter % 30 == 0){
+    if(counter % 5 == 0){
         socket.emit('playerinfo', {'x': deltaX, 'y': deltaY});
     }
-    if(counter % 60 == 0){
+    if((counter + 2) % 5 == 0){
         socket.emit('updateme');
     }
     // reset before next loop
@@ -88,10 +88,12 @@ function drawTrees() {
 
 function drawPlayers() {
     players.forEach(function (player) {
-        context.beginPath();
-        context.arc(player.x, player.y, 50, 0, 2 * Math.PI, false);
-        context.fillStyle = 'orange';
-        context.fill();
+        if(player['id'] != socket.io.engine.id){
+            context.beginPath();
+            context.arc(player.x, player.y, 50, 0, 2 * Math.PI, false);
+            context.fillStyle = 'orange';
+            context.fill();
+        };
     });
 }
 

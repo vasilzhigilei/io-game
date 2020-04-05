@@ -17,7 +17,11 @@ players = [] # dictionary format ---> {'id':id, 'x':x, 'y':y}
 def playerinfo(data):
     # called by client to update player data for everyone
     id = request.sid
-    player = next((item for item in players if item['id'] == id), None) # (..., None) for default & error management
+    player = None
+    for item in players:
+        if item['id'] == id:
+            player = item
+            break
     if player != None: # temp workaround, will have to investigate errors
         player['x'] = data['x'];
         player['y'] = data['y'];
@@ -27,8 +31,8 @@ def updateme():
     # updates client with player data, only called by client, not force sent
     id = request.sid
     # this logic may be offset to client in later update to improve server performance
-    excludeSelf = [player for player in players if player.get('id') != id] # excludes self for other players
-    emit('receiveUpdate', {'players': excludeSelf})
+    #excludeSelf = [player for player in players if player.get('id') != id] # excludes self for other players
+    emit('receiveUpdate', {'players': players})
     # improve naming system for emits and receives, as well as data objects <--- note to self
 
 @socketio.on('newplayer')
