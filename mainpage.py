@@ -17,10 +17,10 @@ players = [] # dictionary format ---> {'id':id, 'x':x, 'y':y}
 def playerinfo(data):
     # called by client to update player data for everyone
     id = request.sid
-    print(players)
-    player = next(item for item in players if item['id'] == id) # (..., None) for default & error management
-    player['x'] = data['x'];
-    player['y'] = data['y'];
+    player = next((item for item in players if item['id'] == id), None) # (..., None) for default & error management
+    if player != None: # temp workaround, will have to investigate errors
+        player['x'] = data['x'];
+        player['y'] = data['y'];
 
 @socketio.on('updateme')
 def updateme():

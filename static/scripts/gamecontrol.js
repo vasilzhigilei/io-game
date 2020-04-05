@@ -16,6 +16,8 @@ window.addEventListener('keyup',function(e){
 var keys = [0, 0];
 var speed = 2; // 2 pixels per movement
 var deltaX = canvas.width/2, deltaY = canvas.height/2; // set initial positions to center of screen
+socket.emit('newplayer', {'x': deltaX, 'y': deltaY});
+var counter = 0;
 function gameLoop() {
     if (keyState[37] || keyState[65]){
         // LEFT or A
@@ -54,10 +56,15 @@ function gameLoop() {
     drawTrees();
     drawPlayers();
     drawUser(); // draw circle must go last to overlay on top of other objects
-
-    socket.emit('playerinfo', {'x': deltaX, 'y': deltaY});
+    counter++;
+    if(counter % 30 == 0){
+        socket.emit('playerinfo', {'x': deltaX, 'y': deltaY});
+    }
+    if(counter % 60 == 0){
+        socket.emit('updateme');
+    }
     // reset before next loop
-    keys = [0, 0]
+    keys = [0, 0];
     setTimeout(gameLoop, 5);
 }
 gameLoop();

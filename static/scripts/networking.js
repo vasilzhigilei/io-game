@@ -10,5 +10,3 @@ socket.on('receiveUpdate', function(data) {
     // receive player position update
     players = data['players'];
 });
-
-socket.emit('newplayer', {'x': 500, 'y': 500});
