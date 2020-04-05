@@ -5,8 +5,6 @@ var context = canvas.getContext("2d"); // 2d context
 context.canvas.width  = window.innerWidth;
 context.canvas.height = window.innerHeight;
 
-var players = [{name:'test', x:500, y:500}];
-
 var keyState = {};
 window.addEventListener('keydown',function(e){
     keyState[e.keyCode || e.which] = true;
@@ -57,6 +55,7 @@ function gameLoop() {
     drawPlayers();
     drawUser(); // draw circle must go last to overlay on top of other objects
 
+    socket.emit('playerinfo', {'x': deltaX, 'y': deltaY});
     // reset before next loop
     keys = [0, 0]
     setTimeout(gameLoop, 5);
