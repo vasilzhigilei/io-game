@@ -18,6 +18,8 @@ var speed = 2; // 2 pixels per movement
 var deltaX = canvas.width/2, deltaY = canvas.height/2; // set initial positions to center of screen
 socket.emit('newplayer', {'x': deltaX, 'y': deltaY});
 var counter = 0;
+var multiplier = 1;
+var keypressed = false;
 function gameLoop() {
     if (keyState[37] || keyState[65]){
         // LEFT or A
@@ -48,6 +50,9 @@ function gameLoop() {
     if(keys[0] != 0 && keys[1] != 0){
         multiplier = 0.707;
     }
+    if(keys[0] != 0 || keys[1] != 1){ // may be more efficiently done
+        keypressed = true;
+    }
     deltaX += keys[0] * speed * multiplier; // DIRECTION * SPEED * MULTIPLIER
     deltaY += keys[1] * speed * multiplier; // DIRECTION * SPEED * MULTIPLIER
 
@@ -57,8 +62,9 @@ function gameLoop() {
     drawPlayers();
     drawUser(); // draw circle must go last to overlay on top of other objects
     counter++;
-    if(counter % 5 == 0){
+    if(keypressed && counter % 5 == 0){ // uh-oh I see a problem with this
         socket.emit('playerinfo', {'x': deltaX, 'y': deltaY});
+        keypressed = false;
     }
     if((counter + 2) % 5 == 0){
         socket.emit('updateme');
