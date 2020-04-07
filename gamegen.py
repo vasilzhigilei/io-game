@@ -6,7 +6,7 @@ def generateWorld(size, seed, version=2): # takes seed, version=2 means it allow
     # not to self, will need to address how block size and outer border work
 
     # will probably rework this system in the future
-    blockedsize = int(size/20) # pixel size divided by 20 for 20x20 blocks
+    blockedsize = int(size/50) # pixel size divided by 20 for 20x20 blocks
     world = [[0 for i in range(blockedsize)] for j in range(blockedsize)]
 
     # let's create trees and rocks

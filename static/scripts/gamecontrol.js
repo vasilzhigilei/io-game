@@ -46,15 +46,25 @@ function gameLoop() {
         }
     }
 
-    multiplier = 1; // diagonal multiplier
-    if(keys[0] != 0 && keys[1] != 0){
-        multiplier = 0.707;
+    if(deltaX <= 0){
+        deltaX += 1;
+    }else if(deltaX >= worldsize){
+        deltaX -= 1;
+    }else if(deltaY <= 0){
+        deltaY += 1;
+    }else if(deltaY >= worldsize){
+        deltaY -= 1;
+    }else{
+        multiplier = 1; // diagonal multiplier
+        if(keys[0] != 0 && keys[1] != 0){
+            multiplier = 0.707;
+        }
+        if(keys[0] != 0 || keys[1] != 1){ // may be more efficiently done
+            keypressed = true;
+        }
+        deltaX += keys[0] * speed * multiplier; // DIRECTION * SPEED * MULTIPLIER
+        deltaY += keys[1] * speed * multiplier; // DIRECTION * SPEED * MULTIPLIER
     }
-    if(keys[0] != 0 || keys[1] != 1){ // may be more efficiently done
-        keypressed = true;
-    }
-    deltaX += keys[0] * speed * multiplier; // DIRECTION * SPEED * MULTIPLIER
-    deltaY += keys[1] * speed * multiplier; // DIRECTION * SPEED * MULTIPLIER
 
     // redraw all objects here
     clear();
@@ -90,7 +100,7 @@ function drawTrees() {
     world.forEach(function (block_x, i) {
         block_x.forEach(function (block_y, j) {
             if(block_y == 2){
-                context.fillRect(i*20, j*20, 50, 50);
+                context.fillRect(i*50, j*50, 75, 75);
             };
         });
     });
