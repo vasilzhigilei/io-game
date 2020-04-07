@@ -59,7 +59,7 @@ function gameLoop() {
         if(keys[0] != 0 && keys[1] != 0){
             multiplier = 0.707;
         }
-        if(keys[0] != 0 || keys[1] != 1){ // may be more efficiently done
+        if(keys[0] != 0 || keys[1] != 0){ // may be more efficiently done
             keypressed = true;
         }
         deltaX += keys[0] * speed * multiplier; // DIRECTION * SPEED * MULTIPLIER
