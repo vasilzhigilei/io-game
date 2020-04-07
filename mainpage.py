@@ -1,11 +1,13 @@
 from twilio.twiml.messaging_response import MessagingResponse
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, join_room, emit, send
+import gamegen
 
 app = Flask(__name__)
 socketio = SocketIO(app)
 
-# game_size = [1000, 500] # playable area is x, y
+game_size = 4000 # square size of playable area
+world = gamegen.generateWorld(size=game_size, seed="hello world")
 
 @app.route("/")
 @app.route("/index")
@@ -40,6 +42,7 @@ def newplayer(data):
     id = request.sid
     players.append({'id': id, 'x': data['x'], 'y': data['y']})
     emit('confirm', {'data': 'new player, ' + id})
+    emit('world', {'world': world})
     print('new player: ' + id)
 
 @socketio.on('connect')

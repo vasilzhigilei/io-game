@@ -62,7 +62,7 @@ function gameLoop() {
     drawPlayers();
     drawUser(); // draw circle must go last to overlay on top of other objects
     counter++;
-    if(keypressed && counter % 5 == 0){ // uh-oh I see a problem with this
+    if(keypressed && counter % 5 == 0){ // only send update of position if keypressed is true
         socket.emit('playerinfo', {'x': deltaX, 'y': deltaY});
         keypressed = false;
     }
@@ -87,9 +87,13 @@ function clear() {
 
 function drawTrees() {
     context.fillStyle = 'green';
-    context.fillRect(200, 200, 50, 50);
-    context.fillRect(500, 200, 50, 50);
-    context.fillRect(2000, 400, 50, 50);
+    world.forEach(function (block_x, i) {
+        block_x.forEach(function (block_y, j) {
+            if(block_y == 2){
+                context.fillRect(i*20, j*20, 50, 50);
+            };
+        });
+    });
 }
 
 function drawPlayers() {

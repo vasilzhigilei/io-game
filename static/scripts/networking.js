@@ -6,7 +6,13 @@ socket.on('confirm', function(data) {
 });
 
 var players = [];
+var world = [];
 socket.on('receiveUpdate', function(data) {
     // receive player position update
     players = data['players'];
+});
+
+socket.on('world', function(data) {
+    world = data['world'];
+    console.log(world);
 });
