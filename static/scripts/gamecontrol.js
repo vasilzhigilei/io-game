@@ -14,7 +14,7 @@ window.addEventListener('keyup',function(e){
 },true);
 
 var keys = [0, 0];
-var speed = 2; // 2 pixels per movement
+var speed = 3; // 2 pixels per movement
 var deltaX = canvas.width/2, deltaY = canvas.height/2; // set initial positions to center of screen
 socket.emit('newplayer', {'x': deltaX, 'y': deltaY});
 var counter = 0;
@@ -110,8 +110,14 @@ function drawPlayers() {
     players.forEach(function (player) {
         if(player['id'] != socket.io.engine.id){
             context.beginPath();
-            context.arc(player.x, player.y, 50, 0, 2 * Math.PI, false);
-            context.fillStyle = 'orange';
+            context.arc(player.x, player.y, 45, 0, 2 * Math.PI, false);
+            context.fillStyle = 'rgb(255, 165, 0, .5)';
+            context.fill();
+            context.beginPath();
+            context.moveTo(player.x, player.y);
+            context.arc(player.x, player.y, 45, 0, 1.2*Math.PI, false);
+            context.closePath();
+            context.fillStyle = 'rgba(255, 165, 0, 1)';
             context.fill();
         };
     });
@@ -120,7 +126,13 @@ function drawPlayers() {
 function drawUser() {
     // everything else in game will be moved by deltaX and deltaY
     context.beginPath();
-    context.arc(deltaX, deltaY, 50, 0, 2 * Math.PI, false);
-    context.fillStyle = 'blue';
+    context.arc(deltaX, deltaY, 45, 0, 2* Math.PI, false);
+    context.fillStyle = 'rgba(0, 0, 255, .5)';
+    context.fill();
+    context.beginPath();
+    context.moveTo(deltaX, deltaY);
+    context.arc(deltaX, deltaY, 45, 0, .7*Math.PI, false);
+    context.closePath();
+    context.fillStyle = 'rgba(0, 0, 255, 1)';
     context.fill();
 }
