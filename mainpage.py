@@ -14,7 +14,7 @@ world = gamegen.generateWorld(size=game_size, seed="hello world")
 def home():
     return render_template("index.html")
 
-players = [] # dictionary format ---> {'id':id, 'x':x, 'y':y}
+players = [] # dictionary format ---> {'id':id, 'x':x, 'y':y, 'angle':angle, health':health}
 @socketio.on('playerinfo')
 def playerinfo(data):
     # called by client to update player data for everyone
@@ -27,6 +27,7 @@ def playerinfo(data):
     if player != None: # temp workaround, will have to investigate errors
         player['x'] = data['x'];
         player['y'] = data['y'];
+        player['health'] = data['health'];
 
 @socketio.on('updateme')
 def updateme():

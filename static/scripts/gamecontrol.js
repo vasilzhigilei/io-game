@@ -13,10 +13,12 @@ window.addEventListener('keyup',function(e){
     keyState[e.keyCode || e.which] = false;
 },true);
 
+var health = 1;
+
 var keys = [0, 0];
 var speed = 3; // 2 pixels per movement
 var deltaX = canvas.width/2, deltaY = canvas.height/2; // set initial positions to center of screen
-socket.emit('newplayer', {'x': deltaX, 'y': deltaY});
+socket.emit('newplayer', {'x': deltaX, 'y': deltaY, 'health': health});
 var counter = 0;
 var multiplier = 1;
 var keypressed = false;
@@ -73,7 +75,7 @@ function gameLoop() {
     drawUser(); // draw circle must go last to overlay on top of other objects
     counter++;
     if(keypressed && counter % 5 == 0){ // only send update of position if keypressed is true
-        socket.emit('playerinfo', {'x': deltaX, 'y': deltaY});
+        socket.emit('playerinfo', {'x': deltaX, 'y': deltaY, 'health': health});
         keypressed = false;
     }
     if((counter + 2) % 5 == 0){
@@ -115,7 +117,7 @@ function drawPlayers() {
             context.fill();
             context.beginPath();
             context.moveTo(player.x, player.y);
-            context.arc(player.x, player.y, 45, 0, 1.2*Math.PI, false);
+            context.arc(player.x, player.y, 45, 0, player.health * 2 *Math.PI, false);
             context.closePath();
             context.fillStyle = 'rgba(255, 165, 0, 1)';
             context.fill();
@@ -131,7 +133,7 @@ function drawUser() {
     context.fill();
     context.beginPath();
     context.moveTo(deltaX, deltaY);
-    context.arc(deltaX, deltaY, 45, 0, .7*Math.PI, false);
+    context.arc(deltaX, deltaY, 45, 0, health * 2 * Math.PI, false);
     context.closePath();
     context.fillStyle = 'rgba(0, 0, 255, 1)';
     context.fill();
