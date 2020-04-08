@@ -27,6 +27,7 @@ def playerinfo(data):
     if player != None: # temp workaround, will have to investigate errors
         player['x'] = data['x'];
         player['y'] = data['y'];
+        player['angle'] = data['angle'];
         player['health'] = data['health'];
 
 @socketio.on('updateme')

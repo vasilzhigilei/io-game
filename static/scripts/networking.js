@@ -15,6 +15,6 @@ socket.on('receiveUpdate', function(data) {
 
 socket.on('world', function(data) {
     world = data['world'];
-    worldsize = world.length*50
+    worldsize = world.length*50;
     console.log(world);
 });

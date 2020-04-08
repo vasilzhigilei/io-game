@@ -12,8 +12,16 @@ window.addEventListener('keydown',function(e){
 window.addEventListener('keyup',function(e){
     keyState[e.keyCode || e.which] = false;
 },true);
+var mouseX = canvas.width/2;
+var mouseY = canvas.height/2 - 1; // default is face in up in y direction
+var angle = 0;
+$("body").mousemove(function(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    angle = Math.atan2(mouseY - canvas.height/2, mouseX - canvas.width/2); // in radians!
+});
 
-var health = 1;
+var health = .7;
 
 var keys = [0, 0];
 var speed = 3; // 2 pixels per movement
@@ -75,7 +83,7 @@ function gameLoop() {
     drawUser(); // draw circle must go last to overlay on top of other objects
     counter++;
     if(keypressed && counter % 5 == 0){ // only send update of position if keypressed is true
-        socket.emit('playerinfo', {'x': deltaX, 'y': deltaY, 'health': health});
+        socket.emit('playerinfo', {'x': deltaX, 'y': deltaY, 'angle': angle, 'health': health});
         keypressed = false;
     }
     if((counter + 2) % 5 == 0){
@@ -111,15 +119,28 @@ function drawTrees() {
 function drawPlayers() {
     players.forEach(function (player) {
         if(player['id'] != socket.io.engine.id){
+            // hand drawing
+            context.beginPath();
+            context.arc(player.x + 45 * Math.cos(player.angle-.75), player.y + 45 * Math.sin(player.angle-.75), 20, 0, 2* Math.PI, false);
+            context.fillStyle = 'rgba(255, 138, 128, 1)';
+            context.fill();
+            context.lineWidth = 4;
+            context.strokeStyle = 'rgba(255, 111, 97, 1)';
+            context.stroke();
+            context.beginPath();
+            context.arc(player.x + 45 * Math.cos(player.angle+.75), player.y + 45 * Math.sin(player.angle+.75), 20, 0, 2* Math.PI, false);
+            context.fill();
+            context.stroke();
+
             context.beginPath();
             context.arc(player.x, player.y, 45, 0, 2 * Math.PI, false);
-            context.fillStyle = 'rgb(255, 165, 0, .5)';
+            context.fillStyle = 'rgb(255, 138, 128, 1)';
             context.fill();
             context.beginPath();
             context.moveTo(player.x, player.y);
             context.arc(player.x, player.y, 45, 0, player.health * 2 *Math.PI, false);
             context.closePath();
-            context.fillStyle = 'rgba(255, 165, 0, 1)';
+            context.fillStyle = 'rgba(255, 111, 97, 1)';
             context.fill();
         };
     });
@@ -127,14 +148,28 @@ function drawPlayers() {
 
 function drawUser() {
     // everything else in game will be moved by deltaX and deltaY
+    // hand drawing
+    context.beginPath();
+    context.arc(deltaX + 45 * Math.cos(angle-.75), deltaY + 45 * Math.sin(angle-.75), 20, 0, 2* Math.PI, false);
+    context.fillStyle = 'rgba(59, 104, 225, 1)';
+    context.fill();
+    context.lineWidth = 4;
+    context.strokeStyle = 'rgba(42, 75, 225, 1)';
+    context.stroke();
+    context.beginPath();
+    context.arc(deltaX + 45 * Math.cos(angle+.75), deltaY + 45 * Math.sin(angle+.75), 20, 0, 2* Math.PI, false);
+    context.fill();
+    context.stroke();
+
     context.beginPath();
     context.arc(deltaX, deltaY, 45, 0, 2* Math.PI, false);
-    context.fillStyle = 'rgba(0, 0, 255, .5)';
+    context.fillStyle = 'rgba(59, 104, 225, 1)';
     context.fill();
+    context.stroke();
     context.beginPath();
     context.moveTo(deltaX, deltaY);
     context.arc(deltaX, deltaY, 45, 0, health * 2 * Math.PI, false);
     context.closePath();
-    context.fillStyle = 'rgba(0, 0, 255, 1)';
+    context.fillStyle = 'rgba(42, 75, 225, 1)';
     context.fill();
 }
