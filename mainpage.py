@@ -27,8 +27,18 @@ def playerinfo(data):
     if player != None: # temp workaround, will have to investigate errors
         player['x'] = data['x'];
         player['y'] = data['y'];
-        player['angle'] = data['angle'];
         player['health'] = data['health'];
+
+@socketio.on('playerinfo_angle')
+def playerinfo_angle(data):
+    # called by client to update player angle
+    id = request.sid
+    for item in players:
+        if item['id'] == id:
+            player = item
+            break
+    if player != None: # temp workaround, will have to investigate errors
+        player['angle'] = data['angle'];
 
 @socketio.on('updateme')
 def updateme():

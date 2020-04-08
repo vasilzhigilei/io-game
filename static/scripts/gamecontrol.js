@@ -82,12 +82,15 @@ function gameLoop() {
     drawPlayers();
     drawUser(); // draw circle must go last to overlay on top of other objects
     counter++;
-    if(keypressed && counter % 5 == 0){ // only send update of position if keypressed is true
-        socket.emit('playerinfo', {'x': deltaX, 'y': deltaY, 'angle': angle, 'health': health});
+    if(keypressed && counter % 6 == 0){ // only send update of position if keypressed is true
+        socket.emit('playerinfo', {'x': deltaX, 'y': deltaY, 'health': health});
         keypressed = false;
     }
-    if((counter + 2) % 5 == 0){
+    if((counter + 2) % 6 == 0){
         socket.emit('updateme');
+    }
+    if((counter + 4) % 6 == 0){
+        socket.emit('playerinfo_angle', {'angle': angle});
     }
     // reset before next loop
     keys = [0, 0];
