@@ -23,10 +23,26 @@ $("body").mousemove(function(e) {
     keypressed = true;
 });
 
-canvas.addEventListener('click', function() {
-    // attack/punch code, this should be relayed to server
-    // controlled client side for how many seconds to keep animation active
+var attack = false;
+var attackoffset = 0;
+var attackoffset2 = 0;
+var which = 0;
+canvas.addEventListener('mousedown', function() {
+    attack = true;
+    if(which == 0){
+        attackoffset = 8;
+        which = 1;
+    }else{
+        attackoffset2 = 8;
+        which = 0;
+    }
 }, false);
+canvas.addEventListener('mouseup', function() {
+    attack = false;
+    attackoffset = 0;
+    attackoffset2 = 0;
+}, false);
+
 
 var health = .7;
 
@@ -89,7 +105,7 @@ function gameLoop() {
     drawUser(); // draw circle must go last to overlay on top of other objects
     counter++;
     if(keypressed && counter % 4 == 0){ // only send update of position if keypressed is true
-        socket.emit('playerinfo', {'x': deltaX, 'y': deltaY, 'angle': angle, 'health': health});
+        socket.emit('playerinfo', {'x': deltaX, 'y': deltaY, 'angle': angle, 'attack': attack, 'health': health});
         keypressed = false;
     }
     if((counter + 2) % 4 == 0){
@@ -157,14 +173,14 @@ function drawUser() {
     // everything else in game will be moved by deltaX and deltaY
     // hand drawing
     context.beginPath();
-    context.arc(deltaX + 45 * Math.cos(angle-.75), deltaY + 45 * Math.sin(angle-.75), 20, 0, 2* Math.PI, false);
+    context.arc(deltaX + 45 * Math.cos(angle-.75+attackoffset/80), deltaY + 45 * Math.sin(angle-.75) - attackoffset, 20, 0, 2* Math.PI, false);
     context.fillStyle = 'rgba(59, 104, 225, 1)';
     context.fill();
     context.lineWidth = 4;
     context.strokeStyle = 'rgba(42, 75, 225, 1)';
     context.stroke();
     context.beginPath();
-    context.arc(deltaX + 45 * Math.cos(angle+.75), deltaY + 45 * Math.sin(angle+.75), 20, 0, 2* Math.PI, false);
+    context.arc(deltaX + 45 * Math.cos(angle+.75-attackoffset2/80), deltaY + 45 * Math.sin(angle+.75) - attackoffset2, 20, 0, 2* Math.PI, false);
     context.fill();
     context.stroke();
 

@@ -28,6 +28,7 @@ def playerinfo(data):
         player['x'] = data['x'];
         player['y'] = data['y'];
         player['angle'] = data['angle'];
+        player['attack'] = data['attack'];
         player['health'] = data['health'];
 
 @socketio.on('updateme')
