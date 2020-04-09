@@ -23,6 +23,11 @@ $("body").mousemove(function(e) {
     keypressed = true;
 });
 
+canvas.addEventListener('click', function() {
+    // attack/punch code, this should be relayed to server
+    // controlled client side for how many seconds to keep animation active
+}, false);
+
 var health = .7;
 
 var keys = [0, 0];
