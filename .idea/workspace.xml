@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="be648453-91f8-4bb4-bb45-54be836cca41" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../CurbsidePickUp/.idea/CurbsidePickUp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../CurbsidePickUp/.idea/CurbsidePickUp.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CurbsidePickUp/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CurbsidePickUp/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CurbsidePickUp/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CurbsidePickUp/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CurbsidePickUp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CurbsidePickUp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/io-game.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/io-game.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mainpage.py" beforeDir="false" afterPath="$PROJECT_DIR$/mainpage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/scripts/gamecontrol.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts/gamecontrol.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,9 +36,13 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Python/CS1110/Lab" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Vasil\Desktop\Code\io-game" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Vasil\Desktop\Code\Python\CS1110\Lab" />
     </key>
@@ -160,30 +167,34 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-859" y="8" key="FileChooserDialogImpl" timestamp="1586467040939">
+    <state x="-859" y="8" key="FileChooserDialogImpl" timestamp="1586469569355">
       <screen x="-1280" y="-131" width="1280" height="984" />
     </state>
-    <state x="-859" y="8" key="FileChooserDialogImpl/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@-1280.-131.1280.984" timestamp="1586467040939" />
+    <state x="-859" y="8" key="FileChooserDialogImpl/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@-1280.-131.1280.984" timestamp="1586469569355" />
     <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@0.0.1280.680" timestamp="1586013383007" />
-    <state width="1259" height="117" key="GridCell.Tab.0.bottom" timestamp="1586467922130">
+    <state width="1259" height="150" key="GridCell.Tab.0.bottom" timestamp="1586500236197">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1259" height="263" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@-1280.-131.1280.984" timestamp="1586467060592" />
-    <state width="1259" height="117" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@0.0.1280.680" timestamp="1586467922130" />
-    <state width="1259" height="117" key="GridCell.Tab.0.center" timestamp="1586467922129">
+    <state width="1259" height="117" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@-1280.-131.1280.984" timestamp="1586474836639" />
+    <state width="1259" height="150" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@0.0.1280.680" timestamp="1586500236197" />
+    <state width="1259" height="150" key="GridCell.Tab.0.center" timestamp="1586500236196">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1259" height="263" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@-1280.-131.1280.984" timestamp="1586467060591" />
-    <state width="1259" height="117" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@0.0.1280.680" timestamp="1586467922129" />
-    <state width="1259" height="117" key="GridCell.Tab.0.left" timestamp="1586467922129">
+    <state width="1259" height="117" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@-1280.-131.1280.984" timestamp="1586474836639" />
+    <state width="1259" height="150" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@0.0.1280.680" timestamp="1586500236196" />
+    <state width="1259" height="150" key="GridCell.Tab.0.left" timestamp="1586500236195">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1259" height="263" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@-1280.-131.1280.984" timestamp="1586467060591" />
-    <state width="1259" height="117" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@0.0.1280.680" timestamp="1586467922129" />
-    <state width="1259" height="117" key="GridCell.Tab.0.right" timestamp="1586467922129">
+    <state width="1259" height="117" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@-1280.-131.1280.984" timestamp="1586474836639" />
+    <state width="1259" height="150" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@0.0.1280.680" timestamp="1586500236195" />
+    <state width="1259" height="150" key="GridCell.Tab.0.right" timestamp="1586500236197">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1259" height="263" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@-1280.-131.1280.984" timestamp="1586467060591" />
-    <state width="1259" height="117" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@0.0.1280.680" timestamp="1586467922129" />
+    <state width="1259" height="117" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@-1280.-131.1280.984" timestamp="1586474836639" />
+    <state width="1259" height="150" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@0.0.1280.680" timestamp="1586500236197" />
+    <state x="142" y="0" key="SettingsEditor" timestamp="1586496604685">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@0.0.1280.680" timestamp="1586496604685" />
   </component>
 </project>

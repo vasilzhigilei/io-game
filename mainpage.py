@@ -1,10 +1,12 @@
-from twilio.twiml.messaging_response import MessagingResponse
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, join_room, emit, send
+import eventlet
+from eventlet import wsgi
 import gamegen
 
+eventlet.monkey_patch()
 app = Flask(__name__)
-socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode="eventlet") # async_mode="threading" is a backup idea, this line needs testing
 
 game_size = 4000 # square size of playable area
 world = gamegen.generateWorld(size=game_size, seed="hello world")
