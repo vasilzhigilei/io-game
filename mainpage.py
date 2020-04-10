@@ -21,7 +21,8 @@ random.seed() # for use of random on server aside from world generation
 def home():
     return render_template("index.html")
 
-players = [] # dictionary format ---> {'id':id, 'x':x, 'y':y, 'angle':angle, health':health}
+# dict format: {'id':str, 'name':str, 'x':int, 'y':int, 'angle':int, 'attack':bool, 'keys':list, health':int}
+players = []
 @socketio.on('playerinfo')
 def playerinfo(data):
     # called by client to update player data for everyone
@@ -31,28 +32,23 @@ def playerinfo(data):
         if item['id'] == id:
             player = item
             break
-    if player != None: # temp workaround, will have to investigate errors
-        player['x'] = data['x'];
-        player['y'] = data['y'];
+    if player != None: # temp workaround, will have to investigate errors, but, 'if player exists'
+        player['keys'] = data['keys'];
         player['angle'] = data['angle'];
         player['attack'] = data['attack'];
-        player['health'] = data['health'];
 
 @socketio.on('updateme')
 def updateme():
     # updates client with player data, only called by client, not force sent
     id = request.sid
-    # this logic may be offset to client in later update to improve server performance
-    #excludeSelf = [player for player in players if player.get('id') != id] # excludes self for other players
     emit('receiveUpdate', {'players': players})
-    # improve naming system for emits and receives, as well as data objects <--- note to self
 
 @socketio.on('joingame')
 def joingame(data):
     id = request.sid
     x = random.randrange(game_size)
     y = random.randrange(game_size)
-    players.append({'id': id, 'name': data['name'], 'x': x, 'y': y, 'angle': 0, 'health':100})
+    players.append({'id': id, 'name': data['name'], 'x': x, 'y': y, 'angle': 0, 'attack':False, 'keys':[0, 0], 'health':100})
     emit('confirm', {'data': 'new player, ' + id})
     emit('world', {'world': world})
     print('new player: ' + id)

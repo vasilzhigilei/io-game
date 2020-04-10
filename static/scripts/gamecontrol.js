@@ -86,7 +86,7 @@ function gameLoop() {
     }
 
     if(keypressed && counter % 4 == 0){ // only send update of position if keypressed is true
-        socket.emit('playerinfo', {'x': deltaX, 'y': deltaY, 'angle': angle, 'attack': attack, 'health': health});
+        socket.emit('playerinfo', {'keys':keys, 'angle': angle, 'attack': attack});
         keypressed = false;
     }
     if((counter + 2) % 4 == 0){
