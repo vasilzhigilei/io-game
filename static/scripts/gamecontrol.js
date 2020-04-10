@@ -5,8 +5,7 @@ var context = canvas.getContext("2d"); // 2d context
 context.canvas.width  = window.innerWidth;
 context.canvas.height = window.innerHeight;
 
-window.onresize = function()
-{
+window.onresize = function(){
     canvas.width = window.innerWidth;
     canvas.style.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -51,13 +50,9 @@ canvas.addEventListener('mouseup', function() {
     attackoffset2 = 0;
 }, false);
 
-
-var health = .7;
-
 var keys = [0, 0];
-var speed = 3; // 2 pixels per movement
-var deltaX = canvas.width/2, deltaY = canvas.height/2; // set initial positions to center of screen
-socket.emit('newplayer', {'x': deltaX, 'y': deltaY, 'health': health});
+var name = "testname";
+socket.emit('joingame', {'name':name});
 var counter = 0;
 var multiplier = 1;
 function gameLoop() {
@@ -164,28 +159,33 @@ function drawPlayers() {
 
 function drawUser() {
     // everything else in game will be moved by deltaX and deltaY
-    // hand drawing
-    context.beginPath();
-    context.arc(deltaX + 45 * Math.cos(angle-.75+attackoffset/80), deltaY + 45 * Math.sin(angle-.75) - attackoffset, 20, 0, 2* Math.PI, false);
-    context.fillStyle = 'rgba(59, 104, 225, 1)';
-    context.fill();
-    context.lineWidth = 4;
-    context.strokeStyle = 'rgba(42, 75, 225, 1)';
-    context.stroke();
-    context.beginPath();
-    context.arc(deltaX + 45 * Math.cos(angle+.75-attackoffset2/80), deltaY + 45 * Math.sin(angle+.75) - attackoffset2, 20, 0, 2* Math.PI, false);
-    context.fill();
-    context.stroke();
+    players.forEach(function (player) {
+        if(player['id'] == socket.io.engine.id){
+            // hand drawing
+            context.beginPath();
+            context.arc(deltaX + 45 * Math.cos(angle-.75+attackoffset/80), deltaY + 45 * Math.sin(angle-.75) - attackoffset, 20, 0, 2* Math.PI, false);
+            context.fillStyle = 'rgba(59, 104, 225, 1)';
+            context.fill();
+            context.lineWidth = 4;
+            context.strokeStyle = 'rgba(42, 75, 225, 1)';
+            context.stroke();
+            context.beginPath();
+            context.arc(deltaX + 45 * Math.cos(angle+.75-attackoffset2/80), deltaY + 45 * Math.sin(angle+.75) - attackoffset2, 20, 0, 2* Math.PI, false);
+            context.fill();
+            context.stroke();
 
-    context.beginPath();
-    context.arc(deltaX, deltaY, 45, 0, 2* Math.PI, false);
-    context.fillStyle = 'rgba(59, 104, 225, 1)';
-    context.fill();
-    context.stroke();
-    context.beginPath();
-    context.moveTo(deltaX, deltaY);
-    context.arc(deltaX, deltaY, 45, 0, health * 2 * Math.PI, false);
-    context.closePath();
-    context.fillStyle = 'rgba(42, 75, 225, 1)';
-    context.fill();
+            context.beginPath();
+            context.arc(deltaX, deltaY, 45, 0, 2* Math.PI, false);
+            context.fillStyle = 'rgba(59, 104, 225, 1)';
+            context.fill();
+            context.stroke();
+            context.beginPath();
+            context.moveTo(deltaX, deltaY);
+            context.arc(deltaX, deltaY, 45, 0, health * 2 * Math.PI, false);
+            context.closePath();
+            context.fillStyle = 'rgba(42, 75, 225, 1)';
+            context.fill();
+            return;
+        };
+    });
 }

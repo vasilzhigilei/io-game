@@ -2,14 +2,19 @@ from flask import Flask, render_template, request
 from flask_socketio import SocketIO, join_room, emit, send
 import eventlet
 from eventlet import wsgi
+import random
+
 import gamegen
 
 eventlet.monkey_patch()
+
 app = Flask(__name__)
 socketio = SocketIO(app, async_mode="eventlet") # async_mode="threading" is a backup idea, this line needs testing
 
 game_size = 4000 # square size of playable area
 world = gamegen.generateWorld(size=game_size, seed="hello world")
+
+random.seed() # for use of random on server aside from world generation
 
 @app.route("/")
 @app.route("/index")
@@ -42,10 +47,12 @@ def updateme():
     emit('receiveUpdate', {'players': players})
     # improve naming system for emits and receives, as well as data objects <--- note to self
 
-@socketio.on('newplayer')
-def newplayer(data):
+@socketio.on('joingame')
+def joingame(data):
     id = request.sid
-    players.append({'id': id, 'x': data['x'], 'y': data['y']})
+    x = random.randrange(game_size)
+    y = random.randrange(game_size)
+    players.append({'id': id, 'name': data['name'], 'x': x, 'y': y, 'angle': 0, 'health':100})
     emit('confirm', {'data': 'new player, ' + id})
     emit('world', {'world': world})
     print('new player: ' + id)
