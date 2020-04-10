@@ -5,6 +5,14 @@ var context = canvas.getContext("2d"); // 2d context
 context.canvas.width  = window.innerWidth;
 context.canvas.height = window.innerHeight;
 
+window.onresize = function()
+{
+    canvas.width = window.innerWidth;
+    canvas.style.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvas.style.height = window.innerHeight;
+}
+
 var keyState = {};
 var keypressed = false;
 window.addEventListener('keydown',function(e){
@@ -14,8 +22,8 @@ window.addEventListener('keyup',function(e){
     keyState[e.keyCode || e.which] = false;
 },true);
 var mouseX = canvas.width/2;
-var mouseY = canvas.height/2 - 1; // default is face in up in y direction
-var angle = 0;
+var mouseY = canvas.height/2 - 1; // default is face up in y direction
+var angle = 0; // in radians
 $("body").mousemove(function(e) {
     mouseX = e.clientX;
     mouseY = e.clientY;
