@@ -78,24 +78,16 @@ function gameLoop() {
         }
     }
 
-    if(deltaX <= 0){
-        deltaX += 1;
-    }else if(deltaX >= worldsize){
-        deltaX -= 1;
-    }else if(deltaY <= 0){
-        deltaY += 1;
-    }else if(deltaY >= worldsize){
-        deltaY -= 1;
-    }else{
-        multiplier = 1; // diagonal multiplier
-        if(keys[0] != 0 && keys[1] != 0){
-            multiplier = 0.707;
-        }
-        if(keys[0] != 0 || keys[1] != 0){ // may be more efficiently done
-            keypressed = true;
-        }
-        deltaX += keys[0] * speed * multiplier; // DIRECTION * SPEED * MULTIPLIER
-        deltaY += keys[1] * speed * multiplier; // DIRECTION * SPEED * MULTIPLIER
+    if(keys[0] != 0 || keys[1] != 0){
+        keypressed = true;
+    }
+
+    if(keypressed && counter % 4 == 0){ // only send update of position if keypressed is true
+        socket.emit('playerinfo', {'x': deltaX, 'y': deltaY, 'angle': angle, 'attack': attack, 'health': health});
+        keypressed = false;
+    }
+    if((counter + 2) % 4 == 0){
+        socket.emit('updateme');
     }
 
     // redraw all objects here
@@ -104,13 +96,6 @@ function gameLoop() {
     drawPlayers();
     drawUser(); // draw circle must go last to overlay on top of other objects
     counter++;
-    if(keypressed && counter % 4 == 0){ // only send update of position if keypressed is true
-        socket.emit('playerinfo', {'x': deltaX, 'y': deltaY, 'angle': angle, 'attack': attack, 'health': health});
-        keypressed = false;
-    }
-    if((counter + 2) % 4 == 0){
-        socket.emit('updateme');
-    }
     // reset before next loop
     keys = [0, 0];
     setTimeout(gameLoop, 5);
