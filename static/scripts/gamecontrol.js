@@ -51,8 +51,11 @@ canvas.addEventListener('mouseup', function() {
 }, false);
 
 var keys = [0, 0];
+var x_client, y_client;
+// join game
 var name = "testname";
 socket.emit('joingame', {'name':name});
+
 var counter = 0;
 var multiplier = 1;
 function gameLoop() {
@@ -108,11 +111,11 @@ gameLoop();
 function clear() {
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, canvas.width, canvas.height);
-    context.translate(-deltaX + canvas.width/2, -deltaY + canvas.height/2);
+    context.translate(-x_client + canvas.width/2, -y_client + canvas.height/2);
 
     // also update the background
-    document.getElementsByTagName('canvas')[0].style.backgroundPositionX = -deltaX + "px";
-    document.getElementsByTagName('canvas')[0].style.backgroundPositionY = -deltaY + "px";
+    document.getElementsByTagName('canvas')[0].style.backgroundPositionX = -x_client + "px";
+    document.getElementsByTagName('canvas')[0].style.backgroundPositionY = -y_client + "px";
 }
 
 function drawTrees() {
@@ -162,26 +165,29 @@ function drawUser() {
     players.forEach(function (player) {
         if(player['id'] == socket.io.engine.id){
             // hand drawing
+            x_client = player.x;
+            y_client = player.y;
+
             context.beginPath();
-            context.arc(deltaX + 45 * Math.cos(angle-.75+attackoffset/80), deltaY + 45 * Math.sin(angle-.75) - attackoffset, 20, 0, 2* Math.PI, false);
+            context.arc(x_client + 45 * Math.cos(angle-.75+attackoffset/80), y_client + 45 * Math.sin(angle-.75) - attackoffset, 20, 0, 2* Math.PI, false);
             context.fillStyle = 'rgba(59, 104, 225, 1)';
             context.fill();
             context.lineWidth = 4;
             context.strokeStyle = 'rgba(42, 75, 225, 1)';
             context.stroke();
             context.beginPath();
-            context.arc(deltaX + 45 * Math.cos(angle+.75-attackoffset2/80), deltaY + 45 * Math.sin(angle+.75) - attackoffset2, 20, 0, 2* Math.PI, false);
+            context.arc(x_client + 45 * Math.cos(angle+.75-attackoffset2/80), y_client + 45 * Math.sin(angle+.75) - attackoffset2, 20, 0, 2* Math.PI, false);
             context.fill();
             context.stroke();
 
             context.beginPath();
-            context.arc(deltaX, deltaY, 45, 0, 2* Math.PI, false);
+            context.arc(x_client, y_client, 45, 0, 2* Math.PI, false);
             context.fillStyle = 'rgba(59, 104, 225, 1)';
             context.fill();
             context.stroke();
             context.beginPath();
-            context.moveTo(deltaX, deltaY);
-            context.arc(deltaX, deltaY, 45, 0, health * 2 * Math.PI, false);
+            context.moveTo(x_client, y_client);
+            context.arc(x_client, y_client, 45, 0, player.health * 2 * Math.PI, false);
             context.closePath();
             context.fillStyle = 'rgba(42, 75, 225, 1)';
             context.fill();
