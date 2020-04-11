@@ -88,14 +88,20 @@ function gameLoop() {
         keypressed = true;
     }
 
-    if(keypressed && counter % 4 == 0){ // only send update of position if keypressed is true
+   if(keypressed){ // only send update of position if keypressed is true
         socket.emit('playerinfo', {'keys':keys, 'angle': angle, 'attack': attack});
         keypressed = false;
-    }
-    if((counter + 2) % 4 == 0){
+   }
+   if((counter + 2) % 4 == 0){
         socket.emit('updateme');
+        players.forEach(function (player) {
+            if(player['id'] == socket.io.engine.id){
+                x_client = player.x;
+                y_client = player.y;
+            }
+        });
     }
-
+    counter++;
     // redraw all objects here
     clear();
     drawTrees();
@@ -165,8 +171,6 @@ function drawUser() {
     players.forEach(function (player) {
         if(player['id'] == socket.io.engine.id){
             // hand drawing
-            x_client = player.x;
-            y_client = player.y;
 
             context.beginPath();
             context.arc(x_client + 45 * Math.cos(angle-.75+attackoffset/80), y_client + 45 * Math.sin(angle-.75) - attackoffset, 20, 0, 2* Math.PI, false);

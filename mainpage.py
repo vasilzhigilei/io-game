@@ -23,6 +23,7 @@ def home():
 
 # dict format: {'id':str, 'name':str, 'x':int, 'y':int, 'angle':int, 'attack':bool, 'keys':list, health':int}
 players = []
+speed = 3.0 # universal speed set to 3 pixels
 @socketio.on('playerinfo')
 def playerinfo(data):
     # called by client to update player data for everyone
@@ -36,6 +37,16 @@ def playerinfo(data):
         player['keys'] = data['keys'];
         player['angle'] = data['angle'];
         player['attack'] = data['attack'];
+
+        # check if diagonal movement or not to keep speed consistent
+        multiplier = 1
+        if(player['keys'][0] != 0 and player['keys'][1] != 0):
+            multiplier = .707
+
+        # update x, y positions of player
+        player['x'] += float(player['keys'][0]) * speed * multiplier # direction * speed * multiplier
+        player['y'] += float(player['keys'][1]) * speed * multiplier  # direction * speed * multiplier
+
 
 @socketio.on('updateme')
 def updateme():
