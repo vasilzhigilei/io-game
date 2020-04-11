@@ -23,7 +23,7 @@ window.addEventListener('keyup',function(e){
 var mouseX = canvas.width/2;
 var mouseY = canvas.height/2 - 1; // default is face up in y direction
 var angle = 0; // in radians
-$("body").mousemove(function(e) {
+$("body").mousemove(async(e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
     angle = Math.atan2(mouseY - canvas.height/2, mouseX - canvas.width/2); // in radians!
@@ -34,7 +34,7 @@ var attack = false;
 var attackoffset = 0;
 var attackoffset2 = 0;
 var which = 0;
-canvas.addEventListener('mousedown', function() {
+canvas.addEventListener('mousedown', async() => {
     attack = true;
     if(which == 0){
         attackoffset = 8;
@@ -44,7 +44,7 @@ canvas.addEventListener('mousedown', function() {
         which = 0;
     }
 }, false);
-canvas.addEventListener('mouseup', function() {
+canvas.addEventListener('mouseup', async() => {
     attack = false;
     attackoffset = 0;
     attackoffset2 = 0;

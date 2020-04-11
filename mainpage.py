@@ -3,13 +3,17 @@ from flask_socketio import SocketIO, join_room, emit, send
 import eventlet
 from eventlet import wsgi
 import random
+from threading import Lock
 
 import gamegen
 
 eventlet.monkey_patch()
 
 app = Flask(__name__)
-socketio = SocketIO(app, async_mode="eventlet") # async_mode="threading" is a backup idea, this line needs testing
+socketio = SocketIO(app, async_mode=None) # async_mode="threading" is a backup idea, this line needs testing
+
+thread = None
+thread_lock = Lock()
 
 game_size = 4000 # square size of playable area
 world = gamegen.generateWorld(size=game_size, seed="hello world")
@@ -28,25 +32,27 @@ speed = 3.0 # universal speed set to 3 pixels
 def playerinfo(data):
     # called by client to update player data for everyone
     id = request.sid
+    socketio.start_background_task(target=background_playerupdate(id, data))
+
+def background_playerupdate(id, data):
     player = None
     for item in players:
         if item['id'] == id:
             player = item
             break
-    if player != None: # temp workaround, will have to investigate errors, but, 'if player exists'
+    if player != None:  # temp workaround, will have to investigate errors, but, 'if player exists'
         player['keys'] = data['keys'];
         player['angle'] = data['angle'];
         player['attack'] = data['attack'];
 
         # check if diagonal movement or not to keep speed consistent
         multiplier = 1
-        if(player['keys'][0] != 0 and player['keys'][1] != 0):
+        if (player['keys'][0] != 0 and player['keys'][1] != 0):
             multiplier = .707
 
         # update x, y positions of player
-        player['x'] += float(player['keys'][0]) * speed * multiplier # direction * speed * multiplier
+        player['x'] += float(player['keys'][0]) * speed * multiplier  # direction * speed * multiplier
         player['y'] += float(player['keys'][1]) * speed * multiplier  # direction * speed * multiplier
-
 
 @socketio.on('updateme')
 def updateme():
