@@ -13,7 +13,7 @@ app = Flask(__name__)
 socketio = SocketIO(app, async_mode=None) # async_mode="threading" is a backup idea, this line needs testing
 
 thread = None
-thread_lock = Lock()
+thread_lock = Lock() # thread starts at bottom of file
 
 game_size = 4000 # square size of playable area
 world = gamegen.generateWorld(size=game_size, seed="hello world")
@@ -32,7 +32,8 @@ speed = 3.0 # universal speed set to 3 pixels
 def playerinfo(data):
     # called by client to update player data for everyone
     id = request.sid
-    socketio.start_background_task(target=background_playerupdate(id, data))
+    socketio.start_background_task(background_playerupdate, id, data)
+
 
 def background_playerupdate(id, data):
     player = None
@@ -53,12 +54,12 @@ def background_playerupdate(id, data):
         # update x, y positions of player
         player['x'] += float(player['keys'][0]) * speed * multiplier  # direction * speed * multiplier
         player['y'] += float(player['keys'][1]) * speed * multiplier  # direction * speed * multiplier
+    socketio.sleep()
 
-@socketio.on('updateme')
-def updateme():
-    # updates client with player data, only called by client, not force sent
-    id = request.sid
-    emit('receiveUpdate', {'players': players})
+def background_UPDATEALL():
+    while True:
+        socketio.sleep(.01)
+        socketio.emit('receiveUpdate', {'players': players})
 
 @socketio.on('joingame')
 def joingame(data):
@@ -75,6 +76,10 @@ def connect():
     id = request.sid
     emit('confirm', {'data': 'Connected, ' + id})
     print('CONNECT:    ' + id)
+    global thread
+    with thread_lock:
+        if thread is None:
+            thread = socketio.start_background_task(target=background_UPDATEALL)
 
 
 @socketio.on('disconnect')

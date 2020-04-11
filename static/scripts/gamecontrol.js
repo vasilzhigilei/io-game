@@ -91,9 +91,7 @@ function gameLoop() {
         socket.emit('playerinfo', {'keys':keys, 'angle': angle, 'attack': attack});
         keypressed = false;
    }
-   if((counter + 2) % 4 == 0){
-        socket.emit('updateme');
-    }
+
     counter++;
     // redraw all objects here
     clear();
