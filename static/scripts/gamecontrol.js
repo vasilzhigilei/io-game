@@ -51,7 +51,6 @@ canvas.addEventListener('mouseup', function() {
 }, false);
 
 var keys = [0, 0];
-var x_client, y_client;
 // join game
 var name = "testname";
 socket.emit('joingame', {'name':name});
@@ -94,12 +93,6 @@ function gameLoop() {
    }
    if((counter + 2) % 4 == 0){
         socket.emit('updateme');
-        players.forEach(function (player) {
-            if(player['id'] == socket.io.engine.id){
-                x_client = player.x;
-                y_client = player.y;
-            }
-        });
     }
     counter++;
     // redraw all objects here
@@ -124,7 +117,7 @@ function clear() {
     document.getElementsByTagName('canvas')[0].style.backgroundPositionY = -y_client + "px";
 }
 
-function drawTrees() {
+async function drawTrees() {
     context.fillStyle = 'green';
     world.forEach(function (block_x, i) {
         block_x.forEach(function (block_y, j) {
@@ -135,7 +128,7 @@ function drawTrees() {
     });
 }
 
-function drawPlayers() {
+async function drawPlayers() {
     players.forEach(function (player) {
         if(player['id'] != socket.io.engine.id){
             // hand drawing
@@ -166,7 +159,7 @@ function drawPlayers() {
     });
 }
 
-function drawUser() {
+async function drawUser() {
     // everything else in game will be moved by deltaX and deltaY
     players.forEach(function (player) {
         if(player['id'] == socket.io.engine.id){

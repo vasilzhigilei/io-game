@@ -8,9 +8,17 @@ socket.on('confirm', function(data) {
 var players = [];
 var world = [];
 var worldsize = 1000; // initial value, will be reset instantly, in pixels
-socket.on('receiveUpdate', function(data) {
+var x_client = 0;
+var y_client = 0;
+socket.on('receiveUpdate', async(data) => {
     // receive player position update
     players = data['players'];
+    players.forEach(function (player) {
+        if(player['id'] == socket.io.engine.id){
+            x_client = player.x;
+            y_client = player.y;
+        }
+    });
 });
 
 socket.on('world', function(data) {
