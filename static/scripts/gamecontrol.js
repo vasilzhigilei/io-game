@@ -143,6 +143,10 @@ async function drawPlayers() {
             context.fill();
             context.font = "20px Arial";
             context.fillText(player.name, player.x, player.y)
+
+            context.font = "bold 30px sans-serif";
+            context.fillStyle = 'rgba(255, 255, 255, 1)';
+            context.fillText(player.name, player.x, player.y);
         };
     });
 }
