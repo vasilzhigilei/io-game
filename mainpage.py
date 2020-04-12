@@ -18,9 +18,8 @@ thread_lock = Lock() # thread starts at bottom of file
 
 counter = 0
 
-game_size = 1000 # square size of playable area
+game_size = 3000 # square size of playable area
 world = gamegen.generateWorld(size=game_size, seed="hello world")
-
 random.seed() # for use of random on server aside from world generation
 
 @app.route("/")

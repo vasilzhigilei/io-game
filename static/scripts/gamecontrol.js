@@ -1,17 +1,5 @@
 // GAME CONTROL
 
-var canvas = document.getElementById("myCanvas"); // Canvas
-var context = canvas.getContext("2d"); // 2d context
-context.canvas.width  = window.innerWidth;
-context.canvas.height = window.innerHeight;
-
-window.onresize = function(){
-    canvas.width = window.innerWidth;
-    canvas.style.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    canvas.style.height = window.innerHeight;
-}
-
 var keyState = {};
 var keypressed = false;
 window.addEventListener('keydown',function(e){
@@ -52,9 +40,6 @@ canvas.addEventListener('mouseup', async() => {
 }, false);
 
 var keys = [0, 0];
-// join game
-var name = "testname";
-socket.emit('joingame', {'name':name});
 
 var counter = 0;
 var multiplier = 1;
@@ -165,7 +150,6 @@ async function drawUser() {
     players.forEach(function (player) {
         if(player['id'] == socket.io.engine.id){
             // hand drawing
-
             context.beginPath();
             context.arc(x_client + 45 * Math.cos(angle-.75+attackoffset/80), y_client + 45 * Math.sin(angle-.75) - attackoffset, 20, 0, 2* Math.PI, false);
             context.fillStyle = 'rgba(59, 104, 225, 1)';
@@ -178,6 +162,7 @@ async function drawUser() {
             context.fill();
             context.stroke();
 
+            //context.filter = "opacity(.5)"; // REALLY BAD PERFORMANCE, was just playing around with filters
             context.beginPath();
             context.arc(x_client, y_client, 45, 0, 2* Math.PI, false);
             context.fillStyle = 'rgba(59, 104, 225, 1)';
@@ -189,6 +174,7 @@ async function drawUser() {
             context.closePath();
             context.fillStyle = 'rgba(42, 75, 225, 1)';
             context.fill();
+            //context.filter = "opacity(1)";
             return;
         };
     });
