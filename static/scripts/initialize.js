@@ -12,6 +12,9 @@ window.onresize = function(){
     canvas.style.height = window.innerHeight;
 }
 
-// join game
-var name = "testname";
-socket.emit('joingame', {'name':name});
+function joinGame(){
+    var name = document.getElementById("name").value;
+    socket.emit('joingame', {'name':name});
+    var element = document.getElementById("overlay");
+    element.parentNode.removeChild(element);
+}

@@ -78,7 +78,7 @@ function gameLoop() {
         if(attack == false){
             keypressed = false;
         }
-   }
+    }
 
     counter++;
     // redraw all objects here
