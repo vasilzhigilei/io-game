@@ -35,6 +35,7 @@ var attackoffset = 0;
 var attackoffset2 = 0;
 var which = 0;
 canvas.addEventListener('mousedown', async() => {
+    keypressed = true;
     attack = true;
     if(which == 0){
         attackoffset = 8;
@@ -89,7 +90,9 @@ function gameLoop() {
 
    if(keypressed){ // only send update of position if keypressed is true
         socket.emit('playerinfo', {'keys':keys, 'angle': angle, 'attack': attack});
-        keypressed = false;
+        if(attack == false){
+            keypressed = false;
+        }
    }
 
     counter++;
@@ -149,7 +152,7 @@ async function drawPlayers() {
             context.stroke();
             context.beginPath();
             context.moveTo(player.x, player.y);
-            context.arc(player.x, player.y, 45, 0, player.health * 2 *Math.PI, false);
+            context.arc(player.x, player.y, 45, 0, player.health/50 * Math.PI, false);
             context.closePath();
             context.fillStyle = 'rgba(255, 111, 97, 1)';
             context.fill();
@@ -182,7 +185,7 @@ async function drawUser() {
             context.stroke();
             context.beginPath();
             context.moveTo(x_client, y_client);
-            context.arc(x_client, y_client, 45, 0, player.health * 2 * Math.PI, false);
+            context.arc(x_client, y_client, 45, 0, player.health/50 * Math.PI, false);
             context.closePath();
             context.fillStyle = 'rgba(42, 75, 225, 1)';
             context.fill();

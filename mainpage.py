@@ -5,6 +5,7 @@ from eventlet import wsgi
 import random
 from threading import Lock
 
+import helper
 import gamegen
 
 eventlet.monkey_patch()
@@ -15,7 +16,9 @@ socketio = SocketIO(app, async_mode=None) # async_mode="threading" is a backup i
 thread = None
 thread_lock = Lock() # thread starts at bottom of file
 
-game_size = 4000 # square size of playable area
+counter = 0
+
+game_size = 1000 # square size of playable area
 world = gamegen.generateWorld(size=game_size, seed="hello world")
 
 random.seed() # for use of random on server aside from world generation
@@ -32,42 +35,57 @@ speed = 3.0 # universal speed set to 3 pixels
 def playerinfo(data):
     # called by client to update player data for everyone
     id = request.sid
-    socketio.start_background_task(background_playerupdate, id, data)
-
-
-def background_playerupdate(id, data):
     player = None
     for item in players:
         if item['id'] == id:
             player = item
             break
-    if player != None:  # temp workaround, will have to investigate errors, but, 'if player exists'
-        player['keys'] = data['keys']
-        player['angle'] = data['angle']
-        player['attack'] = data['attack']
+    if player != None:
+        socketio.start_background_task(background_playerupdate, player, data)
+        if(player['attack'] == True and counter % 50 == 0):
+            socketio.start_background_task(background_checkattack, player, data)
 
-        if(player['x'] <= 0):
-            player['x'] += 1
-        elif(player['x'] >= game_size):
-            player['x'] -= 1
-        elif(player['y'] <= 0):
-            player['y'] += 1;
-        elif(player['y'] >= game_size):
-            player['y'] -= 1
-        else:
-            # check if diagonal movement or not to keep speed consistent
-            multiplier = 1
-            if (player['keys'][0] != 0 and player['keys'][1] != 0):
-                multiplier = .707
+def background_playerupdate(player, data):
+    player['keys'] = data['keys']
+    player['angle'] = data['angle']
+    player['attack'] = data['attack']
 
-            # update x, y positions of player
-            player['x'] += float(player['keys'][0]) * speed * multiplier  # direction * speed * multiplier
-            player['y'] += float(player['keys'][1]) * speed * multiplier  # direction * speed * multiplier
+    if(player['x'] <= 0):
+        player['x'] += 1
+    elif(player['x'] >= game_size):
+        player['x'] -= 1
+    elif(player['y'] <= 0):
+        player['y'] += 1;
+    elif(player['y'] >= game_size):
+        player['y'] -= 1
+    else:
+        # check if diagonal movement or not to keep speed consistent
+        multiplier = 1
+        if (player['keys'][0] != 0 and player['keys'][1] != 0):
+            multiplier = .707
+
+        # update x, y positions of player
+        player['x'] += float(player['keys'][0]) * speed * multiplier  # direction * speed * multiplier
+        player['y'] += float(player['keys'][1]) * speed * multiplier  # direction * speed * multiplier
     socketio.sleep()
 
+def background_checkattack(player, data):
+    for enemy in players:
+        if(enemy['id'] != player['id']):
+            if(helper.player_distance(enemy, player) < 100):
+                print(enemy['health'])
+                if(enemy['health'] > 9):
+                    enemy['health'] -= 10;
+                else:
+                    enemy['health'] = 0;
+    socketio.sleep()
+
+
 def background_UPDATEALL():
+    global counter
     while True:
         socketio.sleep(.01)
+        counter += 1 # may as well put this here, not accurate to time necessarily
         socketio.emit('receiveUpdate', {'players': players})
 
 @socketio.on('joingame')
