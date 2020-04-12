@@ -42,18 +42,27 @@ def background_playerupdate(id, data):
             player = item
             break
     if player != None:  # temp workaround, will have to investigate errors, but, 'if player exists'
-        player['keys'] = data['keys'];
-        player['angle'] = data['angle'];
-        player['attack'] = data['attack'];
+        player['keys'] = data['keys']
+        player['angle'] = data['angle']
+        player['attack'] = data['attack']
 
-        # check if diagonal movement or not to keep speed consistent
-        multiplier = 1
-        if (player['keys'][0] != 0 and player['keys'][1] != 0):
-            multiplier = .707
+        if(player['x'] <= 0):
+            player['x'] += 1
+        elif(player['x'] >= game_size):
+            player['x'] -= 1
+        elif(player['y'] <= 0):
+            player['y'] += 1;
+        elif(player['y'] >= game_size):
+            player['y'] -= 1
+        else:
+            # check if diagonal movement or not to keep speed consistent
+            multiplier = 1
+            if (player['keys'][0] != 0 and player['keys'][1] != 0):
+                multiplier = .707
 
-        # update x, y positions of player
-        player['x'] += float(player['keys'][0]) * speed * multiplier  # direction * speed * multiplier
-        player['y'] += float(player['keys'][1]) * speed * multiplier  # direction * speed * multiplier
+            # update x, y positions of player
+            player['x'] += float(player['keys'][0]) * speed * multiplier  # direction * speed * multiplier
+            player['y'] += float(player['keys'][1]) * speed * multiplier  # direction * speed * multiplier
     socketio.sleep()
 
 def background_UPDATEALL():
