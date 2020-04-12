@@ -8,10 +8,16 @@
     <script src="static/scripts/networking.js"></script>
 </head>
 <body>
-
-<canvas id="myCanvas"></canvas>
-<script src="static/scripts/initialize.js"></script>
-<script src="static/scripts/gamecontrol.js"></script>
-
+<div id="container">
+    <canvas id="myCanvas"></canvas>
+    <div id="overlay">
+        <form style="width: 100%; height: 100%;">
+            <input type="text" id="name" name="name" placeholder="Enter Name" maxlength="15"><br>
+            <input type="submit" id="submit" value="Join Game">
+        </form>
+    </div>
+    <script src="static/scripts/initialize.js"></script>
+    <script src="static/scripts/gamecontrol.js"></script>
+</div>
 </body>
 </html>

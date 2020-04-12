@@ -7,9 +7,7 @@
       <change beforePath="$PROJECT_DIR$/../CurbsidePickUp/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CurbsidePickUp/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../CurbsidePickUp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CurbsidePickUp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mainpage.py" beforeDir="false" afterPath="$PROJECT_DIR$/mainpage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/scripts/gamecontrol.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts/gamecontrol.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/scripts/networking.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts/networking.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
