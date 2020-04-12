@@ -4,6 +4,8 @@ var canvas = document.getElementById("myCanvas"); // Canvas
 var context = canvas.getContext("2d"); // 2d context
 context.canvas.width  = window.innerWidth;
 context.canvas.height = window.innerHeight;
+context.textBaseline = "middle";
+context.textAlign = "center";
 
 window.onresize = function(){
     canvas.width = window.innerWidth;

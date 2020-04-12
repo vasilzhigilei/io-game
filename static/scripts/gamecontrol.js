@@ -141,6 +141,8 @@ async function drawPlayers() {
             context.closePath();
             context.fillStyle = 'rgba(255, 111, 97, 1)';
             context.fill();
+            context.font = "20px Arial";
+            context.fillText(player.name, player.x, player.y)
         };
     });
 }
@@ -174,6 +176,13 @@ async function drawUser() {
             context.closePath();
             context.fillStyle = 'rgba(42, 75, 225, 1)';
             context.fill();
+
+            context.font = "bold 30px sans-serif";
+            context.fillStyle = 'rgba(255, 255, 255, 1)';
+            context.fillText(player.name, player.x, player.y);
+            //context.lineWidth = 1;
+            //context.strokeStyle = 'rgba(200, 200, 200, 1)';
+            //context.strokeText(player.name, player.x, player.y-80);
             //context.filter = "opacity(1)";
             return;
         };
