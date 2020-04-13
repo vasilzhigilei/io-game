@@ -144,6 +144,8 @@ async function drawPlayers() {
             context.font = "20px Arial";
             context.fillText(player.name, player.x, player.y)
 
+            context.textBaseline = "middle";
+            context.textAlign = "center";
             context.font = "bold 30px sans-serif";
             context.fillStyle = 'rgba(255, 255, 255, 1)';
             context.fillText(player.name, player.x, player.y);
@@ -181,6 +183,8 @@ async function drawUser() {
             context.fillStyle = 'rgba(42, 75, 225, 1)';
             context.fill();
 
+            context.textBaseline = "middle";
+            context.textAlign = "center";
             context.font = "bold 30px sans-serif";
             context.fillStyle = 'rgba(255, 255, 255, 1)';
             context.fillText(player.name, player.x, player.y);
