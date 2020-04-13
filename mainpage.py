@@ -27,7 +27,7 @@ random.seed() # for use of random on server aside from world generation
 def home():
     return render_template("index.html")
 
-# dict format: {'id':str, 'name':str, 'x':int, 'y':int, 'angle':int, 'attack':bool, 'keys':list, health':int}
+# dict format: {'id':str, 'name':str, 'x':int, 'y':int, 'angle':int, 'attack':bool, 'attacktime':int, 'keys':list, health':int}
 players = []
 speed = 3.0 # universal speed set to 3 pixels
 @socketio.on('playerinfo')
@@ -41,7 +41,7 @@ def playerinfo(data):
             break
     if player != None:
         socketio.start_background_task(background_playerupdate, player, data)
-        if(player['attack'] == True and counter % 50 == 0):
+        if(player['attack'] == True and player['attacktime'] <= counter):
             socketio.start_background_task(background_checkattack, player, data)
 
 def background_playerupdate(player, data):
@@ -72,11 +72,11 @@ def background_checkattack(player, data):
     for enemy in players:
         if(enemy['id'] != player['id']):
             if(helper.player_distance(enemy, player) < 100):
-                print(enemy['health'])
                 if(enemy['health'] > 9):
                     enemy['health'] -= 10;
                 else:
                     enemy['health'] = 0;
+    player['attacktime'] = counter + 50;
     socketio.sleep()
 
 
@@ -92,7 +92,7 @@ def joingame(data):
     id = request.sid
     x = random.randrange(game_size)
     y = random.randrange(game_size)
-    players.append({'id': id, 'name': data['name'], 'x': x, 'y': y, 'angle': 0, 'attack':False, 'keys':[0, 0], 'health':100})
+    players.append({'id': id, 'name': data['name'], 'x': x, 'y': y, 'angle': 0, 'attack': False, 'attacktime': 0, 'keys': [0, 0], 'health':100})
     emit('confirm', {'data': 'new player, ' + id})
     emit('world', {'world': world})
     print('new player: ' + id)
