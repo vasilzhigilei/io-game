@@ -27,3 +27,10 @@ socket.on('world', function(data) {
     worldsize = world.length*50;
     console.log(world);
 });
+
+socket.on('die', function(data) {
+    $.get("static/menu.html", function (data) {
+        $("#container").append(data);
+    });
+    console.log(data);
+});

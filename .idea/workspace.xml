@@ -8,8 +8,7 @@
       <change beforePath="$PROJECT_DIR$/../CurbsidePickUp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CurbsidePickUp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mainpage.py" beforeDir="false" afterPath="$PROJECT_DIR$/mainpage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/scripts/initialize.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts/initialize.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/scripts/networking.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts/networking.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

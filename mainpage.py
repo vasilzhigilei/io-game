@@ -72,16 +72,17 @@ def background_checkattack(player):
     for enemy in players:
         if(enemy['id'] != player['id']):
             if(helper.player_distance(enemy, player) < 100):
-                if(enemy['health'] > 9):
+                if(enemy['health'] > 10):
                     enemy['health'] -= 10;
                 else:
                     enemy['health'] = 0;
+                    die(enemy);
     player['attacktime'] = counter + 50;
     socketio.sleep()
 
 def die(player):
+    socketio.emit('die', 'for your eyes only', room=player['id']);
     players.remove(player)
-
 
 def background_UPDATEALL():
     global counter
