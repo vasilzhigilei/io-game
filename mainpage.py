@@ -42,7 +42,7 @@ def playerinfo(data):
     if player != None:
         socketio.start_background_task(background_playerupdate, player, data)
         if(player['attack'] == True and player['attacktime'] <= counter):
-            socketio.start_background_task(background_checkattack, player, data)
+            socketio.start_background_task(background_checkattack, player)
 
 def background_playerupdate(player, data):
     player['keys'] = data['keys']
@@ -68,7 +68,7 @@ def background_playerupdate(player, data):
         player['y'] += float(player['keys'][1]) * speed * multiplier  # direction * speed * multiplier
     socketio.sleep()
 
-def background_checkattack(player, data):
+def background_checkattack(player):
     for enemy in players:
         if(enemy['id'] != player['id']):
             if(helper.player_distance(enemy, player) < 100):
@@ -78,6 +78,9 @@ def background_checkattack(player, data):
                     enemy['health'] = 0;
     player['attacktime'] = counter + 50;
     socketio.sleep()
+
+def die(player):
+    players.remove(player)
 
 
 def background_UPDATEALL():

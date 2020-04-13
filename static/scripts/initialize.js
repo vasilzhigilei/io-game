@@ -18,3 +18,7 @@ function joinGame(){
     var element = document.getElementById("overlay");
     element.parentNode.removeChild(element);
 }
+
+$.get("static/menu.html", function (data) {
+    $("#container").append(data);
+});
