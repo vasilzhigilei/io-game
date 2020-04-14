@@ -21,7 +21,6 @@ ngrok==0.0.1
 numpy==1.16.6
 opencv-python==4.2.0.32
 pycrypto==2.6.1
-pygobject==3.26.1
 python-engineio==3.12.1
 python-socketio==4.5.1
 pyxdg==0.25
