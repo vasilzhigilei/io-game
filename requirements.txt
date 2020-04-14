@@ -1,6 +1,6 @@
 asn1crypto==0.24.0
 click==7.1.1
-cryptography==2.1.4
+cryptography==2.3
 dlib==19.19.0
 dnspython==1.16.0
 enum34==1.1.10
