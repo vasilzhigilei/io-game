@@ -7,7 +7,6 @@
       <change beforePath="$PROJECT_DIR$/../CurbsidePickUp/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CurbsidePickUp/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../CurbsidePickUp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CurbsidePickUp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mainpage.py" beforeDir="false" afterPath="$PROJECT_DIR$/mainpage.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,14 +40,14 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Vasil\Desktop\Code\io-game\static" />
-      <recent name="C:\Users\Vasil\Desktop\Code\io-game" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Vasil\Desktop\Code\io-game\static" />
       <recent name="C:\Users\Vasil\Desktop\Code\io-game" />
       <recent name="C:\Users\Vasil\Desktop\Code\Python\CS1110\Lab" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Vasil\Desktop\Code\io-game" />
+      <recent name="C:\Users\Vasil\Desktop\Code\io-game\static" />
     </key>
   </component>
   <component name="RunManager" selected="Python.mainpage">
@@ -196,9 +195,9 @@
     </state>
     <state width="1259" height="117" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@-1280.-131.1280.984" timestamp="1586474836639" />
     <state width="1259" height="145" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@0.0.1280.680" timestamp="1586726691008" />
-    <state x="142" y="0" key="SettingsEditor" timestamp="1586496604685">
+    <state x="142" y="0" key="SettingsEditor" timestamp="1586888670464">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="142" y="0" key="SettingsEditor/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@0.0.1280.680" timestamp="1586496604685" />
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@0.0.1280.680" timestamp="1586888670464" />
   </component>
 </project>
