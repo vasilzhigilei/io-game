@@ -71,7 +71,7 @@ def background_playerupdate(player, data):
 def background_checkattack(player):
     for enemy in players:
         if(enemy['id'] != player['id']):
-            if(helper.player_distance(enemy, player) < 100):
+            if(helper.player_distance(enemy, player) < 130):
                 if(enemy['health'] > 10):
                     enemy['health'] -= 10;
                 else:
