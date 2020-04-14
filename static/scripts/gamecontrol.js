@@ -17,31 +17,27 @@ $("body").mousemove(async(e) => {
     angle = Math.atan2(mouseY - canvas.height/2, mouseX - canvas.width/2); // in radians!
     keypressed = true;
 });
-
+var counter = 0;
 var attack = false;
 var attackoffset = 0;
 var attackoffset2 = 0;
 var which = 0;
+var startattack = 0;
 canvas.addEventListener('mousedown', async() => {
     keypressed = true;
     attack = true;
-    if(which == 0){
-        attackoffset = 8;
-        which = 1;
-    }else{
-        attackoffset2 = 8;
-        which = 0;
-    }
+    startattack = counter;
+
 }, false);
 canvas.addEventListener('mouseup', async() => {
     attack = false;
     attackoffset = 0;
     attackoffset2 = 0;
+    which = 0;
 }, false);
 
 var keys = [0, 0];
 
-var counter = 0;
 var multiplier = 1;
 function gameLoop() {
     if (keyState[37] || keyState[65]){
@@ -77,6 +73,26 @@ function gameLoop() {
         socket.emit('playerinfo', {'keys':keys, 'angle': angle, 'attack': attack});
         if(attack == false){
             keypressed = false;
+        }
+    }
+
+    if(attack == true && counter % 50 == startattack % 50){
+        if(which == 0){
+            attackoffset = 11;
+            attackoffset2 = -2;
+            which = 1;
+        }else if(which == 1){
+            attackoffset = 1;
+            attackoffset2 = 1;
+            which = 2;
+        }else if(which == 2){
+            attackoffset = -2;
+            attackoffset2 = 11;
+            which = 3;
+        }else if(which == 3){
+            attackoffset = 1;
+            attackoffset2 = 1;
+            which = 0;
         }
     }
 
@@ -159,14 +175,14 @@ async function drawUser() {
         if(player['id'] == socket.io.engine.id){
             // hand drawing
             context.beginPath();
-            context.arc(x_client + 45 * Math.cos(angle-.75+attackoffset/80), y_client + 45 * Math.sin(angle-.75) - attackoffset, 20, 0, 2* Math.PI, false);
+            context.arc(x_client + 45 * Math.cos(angle-.75+attackoffset/40), y_client + 45 * Math.sin(angle-.75 + attackoffset/40), 20, 0, 2* Math.PI, false);
             context.fillStyle = 'rgba(59, 104, 225, 1)';
             context.fill();
             context.lineWidth = 4;
             context.strokeStyle = 'rgba(42, 75, 225, 1)';
             context.stroke();
             context.beginPath();
-            context.arc(x_client + 45 * Math.cos(angle+.75-attackoffset2/80), y_client + 45 * Math.sin(angle+.75) - attackoffset2, 20, 0, 2* Math.PI, false);
+            context.arc(x_client + 45 * Math.cos(angle+.75-attackoffset2/40), y_client + 45 * Math.sin(angle+.75-attackoffset2/40), 20, 0, 2* Math.PI, false);
             context.fill();
             context.stroke();
 

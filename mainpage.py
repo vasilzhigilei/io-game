@@ -81,7 +81,7 @@ def background_checkattack(player):
     socketio.sleep()
 
 def die(player):
-    socketio.emit('die', 'for your eyes only', room=player['id']);
+    socketio.emit('die', 'You died!', room=player['id']);
     players.remove(player)
 
 def background_UPDATEALL():
