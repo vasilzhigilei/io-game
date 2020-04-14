@@ -9,7 +9,6 @@ Flask==1.1.2
 Flask-SocketIO==4.2.1
 greenlet==0.4.15
 gunicorn==19.7.1
-gyp==0.1
 idna==2.6
 ipaddress==1.0.17
 itsdangerous==1.1.0
