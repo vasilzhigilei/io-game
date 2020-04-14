@@ -1,5 +1,5 @@
 // NETWORKING AND SOCKETIO CODE
-var socket = io();
+var socket = io({'transports': ['websocket']});
 socket.on('confirm', function(data) {
     // confirms events such as client connection to the server
     console.log(data);

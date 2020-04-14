@@ -11,7 +11,7 @@ import gamegen
 eventlet.monkey_patch()
 
 app = Flask(__name__)
-socketio = SocketIO(app, async_mode=None) # async_mode="threading" is a backup idea, this line needs testing
+socketio = SocketIO(app, transport='websocket' , async_mode=None) # async_mode="threading" is a backup idea, this line needs testing
 
 thread = None
 thread_lock = Lock() # thread starts at bottom of file
