@@ -69,14 +69,14 @@ function gameLoop() {
         keypressed = true;
     }
 
-   if(keypressed){ // only send update of position if keypressed is true
+   if(counter % 10 == 0){ // only send update of position if keypressed is true
         socket.emit('playerinfo', {'keys':keys, 'angle': angle, 'attack': attack});
         if(attack == false){
             keypressed = false;
         }
     }
 
-    if(attack == true && counter % 50 == startattack % 50){
+    if(attack == true && counter % 20 == startattack % 20){
         if(which == 0){
             attackoffset = 11;
             attackoffset2 = -2;
@@ -105,7 +105,7 @@ function gameLoop() {
     counter++;
     // reset before next loop
     keys = [0, 0];
-    setTimeout(gameLoop, 5);
+    setTimeout(gameLoop, 20);
 }
 gameLoop();
 

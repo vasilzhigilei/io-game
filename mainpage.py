@@ -29,7 +29,7 @@ def home():
 
 # dict format: {'id':str, 'name':str, 'x':int, 'y':int, 'angle':int, 'attack':bool, 'attacktime':int, 'keys':list, health':int}
 players = []
-speed = 3.0 # universal speed set to 3 pixels
+speed = 4.0 # universal speed set to 3 pixels
 @socketio.on('playerinfo')
 def playerinfo(data):
     # called by client to update player data for everyone
@@ -40,15 +40,11 @@ def playerinfo(data):
             player = item
             break
     if player != None:
-        socketio.start_background_task(background_playerupdate, player, data)
-        if(player['attack'] == True and player['attacktime'] <= counter):
-            socketio.start_background_task(background_checkattack, player)
+        player['keys'] = data['keys']
+        player['angle'] = data['angle']
+        player['attack'] = data['attack']
 
-def background_playerupdate(player, data):
-    player['keys'] = data['keys']
-    player['angle'] = data['angle']
-    player['attack'] = data['attack']
-
+def background_playerupdate(player):
     if(player['x'] <= 0):
         player['x'] += 1
     elif(player['x'] >= game_size):
@@ -88,6 +84,10 @@ def background_UPDATEALL():
     global counter
     while True:
         socketio.sleep(.01)
+        for player in players:
+            socketio.start_background_task(background_playerupdate, player)
+            if (player['attack'] == True and player['attacktime'] <= counter):
+                socketio.start_background_task(background_checkattack, player)
         counter += 1 # may as well put this here, not accurate to time necessarily
         socketio.emit('receiveUpdate', {'players': players})
 

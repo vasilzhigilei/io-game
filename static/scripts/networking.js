@@ -11,11 +11,15 @@ var world = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 
 var worldsize = 3000;
 var x_client = 1500;
 var y_client = 1500;
+var x_delta = 0;
+var y_delta = 0;
 socket.on('receiveUpdate', async(data) => {
     // receive player position update
     players = data['players'];
     players.forEach(function (player) {
         if(player['id'] == socket.io.engine.id){
+            //x_delta = player.x - x_client;
+            //y_delta = player.y - y_client;
             x_client = player.x;
             y_client = player.y;
         }
