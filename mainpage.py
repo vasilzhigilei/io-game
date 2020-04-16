@@ -4,6 +4,7 @@ import eventlet
 from eventlet import wsgi
 import random
 from threading import Lock
+from threading import Timer
 
 import helper
 import gamegen
@@ -84,17 +85,18 @@ def background_UPDATEALL():
     global counter
     socketio.start_background_task(target=background_UPDATEPOSITIONS)
     while True:
-        socketio.sleep(.01)
         counter += 1 # may as well put this here, not accurate to time necessarily
         socketio.emit('receiveUpdate', {'players': players})
+        socketio.sleep(.01)
 
 def background_UPDATEPOSITIONS():
-    while True:
-        socketio.sleep(.01) # pretty much how fast the game plays, limited by this sleep, may need to settimeout instead
+    while(True):
         for player in players:
             socketio.start_background_task(background_playerupdate, player)
             if (player['attack'] == True and player['attacktime'] <= counter):
                 socketio.start_background_task(background_checkattack, player)
+        socketio.sleep(.01) # ... this should work? may need to implement some sort of setTimeout system to avoid
+                            # slowdown if many players. Have to research more into how socketio.sleep works
 
 @socketio.on('joingame')
 def joingame(data):
