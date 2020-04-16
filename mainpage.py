@@ -77,19 +77,24 @@ def background_checkattack(player):
     socketio.sleep()
 
 def die(player):
-    socketio.emit('die', 'You died!', room=player['id']);
+    socketio.emit('die', 'You died!', room=player['id'])
     players.remove(player)
 
 def background_UPDATEALL():
     global counter
+    socketio.start_background_task(target=background_UPDATEPOSITIONS)
     while True:
         socketio.sleep(.01)
+        counter += 1 # may as well put this here, not accurate to time necessarily
+        socketio.emit('receiveUpdate', {'players': players})
+
+def background_UPDATEPOSITIONS():
+    while True:
+        socketio.sleep(.01) # pretty much how fast the game plays, limited by this sleep, may need to settimeout instead
         for player in players:
             socketio.start_background_task(background_playerupdate, player)
             if (player['attack'] == True and player['attacktime'] <= counter):
                 socketio.start_background_task(background_checkattack, player)
-        counter += 1 # may as well put this here, not accurate to time necessarily
-        socketio.emit('receiveUpdate', {'players': players})
 
 @socketio.on('joingame')
 def joingame(data):

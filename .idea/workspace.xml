@@ -8,8 +8,6 @@
       <change beforePath="$PROJECT_DIR$/../CurbsidePickUp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CurbsidePickUp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mainpage.py" beforeDir="false" afterPath="$PROJECT_DIR$/mainpage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/scripts/gamecontrol.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts/gamecontrol.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/scripts/networking.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts/networking.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,9 +196,9 @@
     </state>
     <state width="1259" height="117" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@-1280.-131.1280.984" timestamp="1586474836639" />
     <state width="1259" height="145" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@0.0.1280.680" timestamp="1586896772020" />
-    <state x="142" y="0" key="SettingsEditor" timestamp="1586888670464">
+    <state x="142" y="0" key="SettingsEditor" timestamp="1587053758582">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="142" y="0" key="SettingsEditor/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@0.0.1280.680" timestamp="1586888670464" />
+    <state x="142" y="0" key="SettingsEditor/0.0.1280.680/1920.0.1920.1040/-1280.-131.1280.984@0.0.1280.680" timestamp="1587053758582" />
   </component>
 </project>
