@@ -17,7 +17,6 @@ keyring==10.6.0
 keyrings.alt==3.0
 MarkupSafe==1.1.1
 monotonic==1.5
-ngrok==0.0.1
 numpy==1.16.6
 opencv-python==4.2.0.32
 pycrypto==2.6.1
