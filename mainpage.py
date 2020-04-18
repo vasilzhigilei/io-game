@@ -103,12 +103,17 @@ def collisionTree(player):
     for row in range(0, len(world)):
         for col in range(0, len(world)):
             if(world[row][col] == 2):
-                treex = row*50
-                treey = col*50
-                if(player['x']+40 > row*50 +5 and player['x']-40 < treex+70 and player['y']+40 > treey+5 and player['y']-40 < treey+70):
-                    player['x'] += -float(player['keys'][0]) * speed # opposite direction * speed
-                    player['y'] += -float(player['keys'][1]) * speed # opposite direction * speed
-
+                treex = row*50 + 25 # center
+                treey = col*50 + 25 # center
+                if(helper.distance(player, treex, treey) < 45+25):
+                    if(player['x'] < treex):
+                        player['x'] -= speed
+                    else:
+                        player['x'] += speed
+                    if (player['y'] < treex):
+                        player['y'] -= speed
+                    else:
+                        player['y'] += speed
 
 @socketio.on('joingame')
 def joingame(data):
