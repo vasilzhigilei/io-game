@@ -7,8 +7,8 @@
       <change beforePath="$PROJECT_DIR$/../CurbsidePickUp/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CurbsidePickUp/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../CurbsidePickUp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../CurbsidePickUp/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/helper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mainpage.py" beforeDir="false" afterPath="$PROJECT_DIR$/mainpage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/scripts/gamecontrol.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts/gamecontrol.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,14 +42,15 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Vasil\Desktop\Code\io-game\static" />
-      <recent name="C:\Users\Vasil\Desktop\Code\io-game" />
-      <recent name="C:\Users\Vasil\Desktop\Code\Python\CS1110\Lab" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Vasil\Desktop\Code\io-game" />
       <recent name="C:\Users\Vasil\Desktop\Code\io-game\static" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Vasil\Desktop\Code\io-game\static\resources" />
+      <recent name="C:\Users\Vasil\Desktop\Code\io-game\static" />
+      <recent name="C:\Users\Vasil\Desktop\Code\io-game" />
+      <recent name="C:\Users\Vasil\Desktop\Code\Python\CS1110\Lab" />
     </key>
   </component>
   <component name="RunManager" selected="Python.mainpage">

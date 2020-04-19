@@ -5,6 +5,7 @@ from eventlet import wsgi
 import random
 from threading import Lock
 from threading import Timer
+import math
 
 import helper
 import gamegen
@@ -103,17 +104,14 @@ def collisionTree(player):
     for row in range(0, len(world)):
         for col in range(0, len(world)):
             if(world[row][col] == 2):
-                treex = row*50 + 25 # center
-                treey = col*50 + 25 # center
-                if(helper.distance(player, treex, treey) < 45+25):
-                    if(player['x'] < treex):
-                        player['x'] -= speed
-                    else:
-                        player['x'] += speed
-                    if (player['y'] < treex):
-                        player['y'] -= speed
-                    else:
-                        player['y'] += speed
+                treex = row*50  # center
+                treey = col*50  # center
+                distance = helper.distance(player, treex, treey)
+                depth = 45 + 50 - distance # sum of radii - distance
+                if(depth > 0): # if intersecting
+                    radians = math.atan2(treex - player['y'], treey - player['x'])
+                    player['x'] += math.cos(radians) * depth
+                    player['y'] += math.sin(radians) * depth
 
 @socketio.on('joingame')
 def joingame(data):

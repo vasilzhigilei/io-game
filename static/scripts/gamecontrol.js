@@ -38,6 +38,9 @@ canvas.addEventListener('mouseup', async() => {
 
 var keys = [0, 0];
 
+var treeImage = new Image();
+treeImage.src = "static/resources/tree.png";
+
 var multiplier = 1;
 function gameLoop() {
     if (keyState[37] || keyState[65]){
@@ -124,7 +127,7 @@ async function drawTrees() {
     world.forEach(function (block_x, i) {
         block_x.forEach(function (block_y, j) {
             if(block_y == 2){
-                context.fillRect(i*50, j*50, 75, 75);
+                context.drawImage(treeImage, i*50-50, j*50-50, 100, 100);
             };
         });
     });
