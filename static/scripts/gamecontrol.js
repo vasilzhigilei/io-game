@@ -160,8 +160,6 @@ async function drawPlayers() {
             context.closePath();
             context.fillStyle = 'rgba(255, 111, 97, 1)';
             context.fill();
-            context.font = "20px Arial";
-            context.fillText(player.name, player.x, player.y)
 
             context.textBaseline = "middle";
             context.textAlign = "center";
@@ -179,10 +177,10 @@ async function drawUser() {
             // hand drawing
             context.beginPath();
             context.arc(x_client + 45 * Math.cos(angle-.75+attackoffset/40), y_client + 45 * Math.sin(angle-.75 + attackoffset/40), 20, 0, 2* Math.PI, false);
-            context.fillStyle = 'rgba(59, 104, 225, 1)';
+            context.fillStyle = 'rgba(170, 128, 85, 1)'; // original blue: rgba(59, 104, 225, 1)
             context.fill();
             context.lineWidth = 4;
-            context.strokeStyle = 'rgba(42, 75, 225, 1)';
+            context.strokeStyle = 'rgba(136, 102, 68, 1)'; // original blue: rgba(42, 75, 225, 1)
             context.stroke();
             context.beginPath();
             context.arc(x_client + 45 * Math.cos(angle+.75-attackoffset2/40), y_client + 45 * Math.sin(angle+.75-attackoffset2/40), 20, 0, 2* Math.PI, false);
@@ -192,14 +190,14 @@ async function drawUser() {
             //context.filter = "opacity(.5)"; // REALLY BAD PERFORMANCE, was just playing around with filters
             context.beginPath();
             context.arc(x_client, y_client, 45, 0, 2* Math.PI, false);
-            context.fillStyle = 'rgba(59, 104, 225, 1)';
+            context.fillStyle = 'rgba(170, 128, 85, 1)'; // original blue: rgba(59, 104, 225, 1)
             context.fill();
             context.stroke();
             context.beginPath();
             context.moveTo(x_client, y_client);
             context.arc(x_client, y_client, 45, 0, player.health/50 * Math.PI, false);
             context.closePath();
-            context.fillStyle = 'rgba(42, 75, 225, 1)';
+            context.fillStyle = 'rgba(136, 102, 68, 1)'; // original blue: rgba(42, 75, 225, 1)
             context.fill();
 
             context.textBaseline = "middle";
