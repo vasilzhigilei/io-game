@@ -128,7 +128,6 @@ async function drawTrees() {
         block_x.forEach(function (block_y, j) {
             if(block_y == 2){
                 context.drawImage(treeImage, i*50-50, j*50-50, 100, 100);
-                context.fillRect(i*50, j*50, 10, 10);
             };
         });
     });

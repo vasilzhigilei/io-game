@@ -33,7 +33,7 @@ def home():
 
 # dict format: {'id':str, 'name':str, 'x':int, 'y':int, 'angle':int, 'attack':bool, 'attacktime':int, 'keys':list, health':int}
 players = []
-speed = 4.0 # universal speed set to 3 pixels
+speed = 8.0 # universal speed set to 3 pixels
 @socketio.on('playerinfo')
 def playerinfo(data):
     # called by client to update player data for everyone
@@ -99,7 +99,7 @@ def background_UPDATEPOSITIONS():
             socketio.start_background_task(collisionTree, player)
             if (player['attack'] == True and player['attacktime'] <= counter):
                 socketio.start_background_task(background_checkattack, player)
-        socketio.sleep(.01) # ... this should work? may need to implement some sort of setTimeout system to avoid
+        socketio.sleep(.02) # ... this should work? may need to implement some sort of setTimeout system to avoid
                             # slowdown if many players. Have to research more into how socketio.sleep works
 
 def collisionTree(player):
@@ -112,7 +112,6 @@ def collisionTree(player):
                 depth = 45 + 50 - distance # sum of radii - distance
                 if(depth > 0): # if intersecting
                     radians = math.atan2(player['y'] - treey, player['x'] - treex)
-                    print(radians)
                     player['x'] += math.cos(radians) * depth
                     player['y'] += math.sin(radians) * depth
 
