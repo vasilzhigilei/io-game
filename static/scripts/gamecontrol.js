@@ -139,10 +139,10 @@ async function drawPlayers() {
             // hand drawing
             context.beginPath();
             context.arc(player.x + 45 * Math.cos(player.angle-.75), player.y + 45 * Math.sin(player.angle-.75), 20, 0, 2* Math.PI, false);
-            context.fillStyle = 'rgba(255, 138, 128, 1)';
+            context.fillStyle = 'rgba(170, 128, 85, 1)'; // original pink: rgba(255, 138, 128, 1)
             context.fill();
             context.lineWidth = 4;
-            context.strokeStyle = 'rgba(255, 111, 97, 1)';
+            context.strokeStyle = 'rgba(136, 102, 68, 1)'; // original pink: rgba(255, 111, 97, 1)
             context.stroke();
             context.beginPath();
             context.arc(player.x + 45 * Math.cos(player.angle+.75), player.y + 45 * Math.sin(player.angle+.75), 20, 0, 2* Math.PI, false);
@@ -151,14 +151,14 @@ async function drawPlayers() {
 
             context.beginPath();
             context.arc(player.x, player.y, 45, 0, 2 * Math.PI, false);
-            context.fillStyle = 'rgb(255, 138, 128, 1)';
+            context.fillStyle = 'rgba(170, 128, 85, 1)'; // original pink: rgba(255, 138, 128, 1)
             context.fill();
             context.stroke();
             context.beginPath();
             context.moveTo(player.x, player.y);
             context.arc(player.x, player.y, 45, 0, player.health/50 * Math.PI, false);
             context.closePath();
-            context.fillStyle = 'rgba(255, 111, 97, 1)';
+            context.fillStyle = 'rgba(136, 102, 68, 1)'; // original pink: rgba(255, 111, 97, 1)
             context.fill();
 
             context.textBaseline = "middle";
