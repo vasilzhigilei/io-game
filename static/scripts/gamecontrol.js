@@ -39,7 +39,7 @@ canvas.addEventListener('mouseup', async() => {
 var keys = [0, 0];
 
 var treeImage = new Image();
-treeImage.src = "static/resources/tree.png";
+treeImage.src = "static/resources/palmtree.png";
 
 var multiplier = 1;
 function gameLoop() {
@@ -102,9 +102,9 @@ function gameLoop() {
     counter++;
     // redraw all objects here
     clear();
-    drawTrees();
     drawPlayers();
-    drawUser(); // draw circle must go last to overlay on top of other objects
+    drawUser(); // draw circle must go second to last to overlay on top of other objects
+    drawTrees(); // drawn last to let leaves overlay on top of players
     counter++;
     // reset before next loop
     keys = [0, 0];
@@ -127,7 +127,7 @@ async function drawTrees() {
     world.forEach(function (block_x, i) {
         block_x.forEach(function (block_y, j) {
             if(block_y == 2){
-                context.drawImage(treeImage, i*50-50, j*50-50, 100, 100);
+                context.drawImage(treeImage, i*100-100, j*100-100, 200, 200);
             };
         });
     });

@@ -106,8 +106,8 @@ def collisionTree(player):
     for row in range(0, len(world)):
         for col in range(0, len(world)):
             if(world[row][col] == 2):
-                treex = row*50  # center
-                treey = col*50  # center
+                treex = row*100  # center
+                treey = col*100  # center
                 distance = helper.distance(player, treex, treey)
                 depth = 45 + 50 - distance # sum of radii - distance
                 if(depth > 0): # if intersecting
