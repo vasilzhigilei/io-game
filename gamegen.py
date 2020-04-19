@@ -10,12 +10,14 @@ def generateWorld(size, seed, version=2): # takes seed, version=2 means it allow
     world = [[0 for i in range(blockedsize)] for j in range(blockedsize)]
 
     # let's create trees and rocks
-    # codes: 0 - nothing, 1 - stone, 2 - trees
+    # codes: 0 - nothing, 1 - stone, 2 - palmtree, 3 - coconut palmtree
 
     # very basic tree gen
     for i in range(len(world)):
         for j in range(len(world[i])):
             if(random.randint(0,30) == 0):
                 world[i][j] = 2
+                if(random.randint(0,1) == 0):
+                    world[i][j] = 3
 
     return world

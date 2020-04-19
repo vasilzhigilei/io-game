@@ -106,7 +106,7 @@ def background_UPDATEPOSITIONS():
 def collisionTree(player):
     for row in range(0, len(world)):
         for col in range(0, len(world)):
-            if(world[row][col] == 2):
+            if(world[row][col] == 2 or world[row][col] == 3):
                 treex = row*100  # center
                 treey = col*100  # center
                 distance = helper.distance(player, treex, treey)

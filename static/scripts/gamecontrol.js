@@ -41,6 +41,9 @@ var keys = [0, 0];
 var treeImage = new Image();
 treeImage.src = "static/resources/palmtree.png";
 
+var coconutImage = new Image();
+coconutImage.src = "static/resources/coconuts.png";
+
 var multiplier = 1;
 function gameLoop() {
     if (keyState[37] || keyState[65]){
@@ -128,6 +131,10 @@ async function drawTrees() {
         block_x.forEach(function (block_y, j) {
             if(block_y == 2){
                 context.drawImage(treeImage, i*100-100, j*100-100, 200, 200);
+            };
+            if(block_y == 3){
+                context.drawImage(treeImage, i*100-100, j*100-100, 200, 200);
+                context.drawImage(coconutImage, i*100-100, j*100-100, 200, 200);
             };
         });
     });
