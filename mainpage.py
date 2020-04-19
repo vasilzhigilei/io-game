@@ -31,7 +31,7 @@ world = gamegen.generateWorld(size=game_size, seed=datetime.datetime.now())
 def home():
     return render_template("index.html")
 
-# dict format: {'id':str, 'name':str, 'x':int, 'y':int, 'angle':int, 'attack':bool, 'attacktime':int, 'keys':list, health':int}
+# dict format: {'id':str, 'name':str, 'x':int, 'y':int, 'angle':float, 'attack':bool, 'attacktime':int, 'keys':list, health':int}
 players = []
 speed = 4.0 # universal speed set to 3 pixels
 @socketio.on('playerinfo')
@@ -72,11 +72,16 @@ def background_checkattack(player):
     for enemy in players:
         if(enemy['id'] != player['id']):
             if(helper.player_distance(enemy, player) < 130):
-                if(enemy['health'] > 10):
-                    enemy['health'] -= 10;
-                else:
-                    enemy['health'] = 0;
-                    die(enemy);
+                radians = math.atan2(enemy['y'] - player['y'], enemy['x'] - player['x'])
+                anglefromfacing = math.fabs(player['angle'] - radians)
+                if(anglefromfacing > math.pi):
+                    anglefromfacing = (anglefromfacing - 2*math.pi)
+                if(anglefromfacing < .4):
+                    if(enemy['health'] > 10):
+                        enemy['health'] -= 10;
+                    else:
+                        enemy['health'] = 0;
+                        die(enemy);
     player['attacktime'] = counter + 50;
     socketio.sleep()
 
