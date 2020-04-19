@@ -3,6 +3,7 @@ from flask_socketio import SocketIO, join_room, emit, send
 import eventlet
 from eventlet import wsgi
 import random
+import datetime
 from threading import Lock
 from threading import Timer
 import math
@@ -20,9 +21,10 @@ thread_lock = Lock() # thread starts at bottom of file
 
 counter = 0
 
-game_size = 3000 # square size of playable area
-world = gamegen.generateWorld(size=game_size, seed="hello world")
 random.seed() # for use of random on server aside from world generation
+
+game_size = 3000 # square size of playable area
+world = gamegen.generateWorld(size=game_size, seed=datetime.datetime.now())
 
 @app.route("/")
 @app.route("/index")
@@ -109,7 +111,8 @@ def collisionTree(player):
                 distance = helper.distance(player, treex, treey)
                 depth = 45 + 50 - distance # sum of radii - distance
                 if(depth > 0): # if intersecting
-                    radians = math.atan2(treex - player['y'], treey - player['x'])
+                    radians = math.atan2(player['y'] - treey, player['x'] - treex)
+                    print(radians)
                     player['x'] += math.cos(radians) * depth
                     player['y'] += math.sin(radians) * depth
 
