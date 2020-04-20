@@ -127,17 +127,10 @@ function clear() {
 
 async function drawTrees() {
     context.fillStyle = 'green';
-    world.forEach(function (block_x, i) {
-        block_x.forEach(function (block_y, j) {
-            if(block_y == 2){
-                context.drawImage(treeImage, i*100-100, j*100-100, 200, 200);
-            };
-            if(block_y == 3){
-                context.drawImage(treeImage, i*100-100, j*100-100, 200, 200);
-                context.drawImage(coconutImage, i*100-100, j*100-100, 200, 200);
-            };
-        });
+    world['trees'].forEach(function (block_x, i) {
+        context.drawImage(treeImage, *100-100, j*100-100, 200, 200);
     });
+    world['coconuts'].forEach
 }
 
 async function drawPlayers() {

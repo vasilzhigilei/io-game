@@ -1,5 +1,5 @@
 import random
-from helper import distance_topos
+from helper import distance_objectpos
 
 def generateWorld(size, seed, version=2): # takes seed, version=2 means it allows strings/bytes/ints
     random.seed(seed)
@@ -19,7 +19,7 @@ def generateWorld(size, seed, version=2): # takes seed, version=2 means it allow
         for j in range(blockedsize):
             if(random.randint(0,20) == 0):
                 for tree in world['trees']:
-                    if distance_topos(tree, i*block, j*block) < 200:
+                    if distance_objectpos(tree, i*block, j*block) < 200:
                         break
                     world['trees'].append({'x':i*block, 'y':j*block})
                     if(random.randint(0,1) == 0):

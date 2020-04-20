@@ -8,7 +8,7 @@ from threading import Lock
 from threading import Timer
 import math
 
-import helper
+from helper import distance_objectobject
 import gamegen
 
 eventlet.monkey_patch()
@@ -70,7 +70,7 @@ def background_playerupdate(player):
 def background_checkattack(player):
     for enemy in players:
         if(enemy['id'] != player['id']):
-            if(helper.player_distance(enemy, player) < 130):
+            if(distance_objectobject(enemy, player) < 130):
                 radians = math.atan2(enemy['y'] - player['y'], enemy['x'] - player['x'])
                 anglefromfacing = math.fabs(player['angle'] - radians)
                 if(anglefromfacing > math.pi):
@@ -108,22 +108,18 @@ def background_UPDATEPOSITIONS():
                             # slowdown if many players. Have to research more into how socketio.sleep works
 
 def collisionTree(player):
-    for row in range(0, len(world)):
-        for col in range(0, len(world)):
-            if(world[row][col] == 2 or world[row][col] == 3):
-                treex = row*100  # center
-                treey = col*100  # center
-                distance = helper.distance(player, treex, treey)
-                depth = 45 + 50 - distance # sum of radii - distance
-                if(depth > 0): # if intersecting
-                    radians = math.atan2(player['y'] - treey, player['x'] - treex)
-                    player['x'] += math.cos(radians) * depth
-                    player['y'] += math.sin(radians) * depth
+    for tree in world['trees']:
+        distance = distance_objectobject(player, tree)
+        depth = 45 + 50 - distance # sum of radii - distance
+        if(depth > 0): #if intersecting
+            radians = math.atan2(player['y'] - tree['y'], player['x'] - tree['x'])
+            player['x'] += math.cos(radians) * depth
+            player['y'] += math.sin(radians) * depth
 
 def collisionPlayer(player):
     for otherplayer in players:
         if (otherplayer['id'] != player['id']):
-            distance = helper.player_distance(player, otherplayer)
+            distance = distance_objectobject(player, otherplayer)
             depth = 45 + 45 - distance  # sum of radii - distance
             if (depth > 0):  # if intersecting
                 radians = math.atan2(player['y'] - otherplayer['y'], player['x'] - otherplayer['x'])
