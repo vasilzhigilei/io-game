@@ -23,9 +23,8 @@ counter = 0
 
 random.seed() # for use of random on server aside from world generation
 
-game_size = 3000 # square size of playable area
+game_size = 2500 # square size of playable area
 world = gamegen.generateWorld(size=game_size, seed=datetime.datetime.now())
-
 @app.route("/")
 @app.route("/index")
 def home():
