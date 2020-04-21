@@ -32,7 +32,7 @@ def home():
 
 # dict format: {'id':str, 'name':str, 'x':int, 'y':int, 'angle':float, 'attack':bool, 'attacktime':int, 'keys':list, health':int}
 players = []
-speed = 4.0 # universal speed set to 3 pixels
+speed = 6.0 # universal speed set to 3 pixels
 @socketio.on('playerinfo')
 def playerinfo(data):
     # called by client to update player data for everyone
@@ -48,23 +48,24 @@ def playerinfo(data):
         player['attack'] = data['attack']
 
 def background_playerupdate(player):
-    if(player['x'] <= 0):
-        player['x'] += 1
-    elif(player['x'] >= game_size):
-        player['x'] -= 1
-    elif(player['y'] <= 0):
-        player['y'] += 1;
-    elif(player['y'] >= game_size):
-        player['y'] -= 1
-    else:
-        # check if diagonal movement or not to keep speed consistent
-        multiplier = 1
-        if (player['keys'][0] != 0 and player['keys'][1] != 0):
-            multiplier = .707
+    # check if diagonal movement or not to keep speed consistent
+    multiplier = 1
+    if (player['keys'][0] != 0 and player['keys'][1] != 0):
+        multiplier = .707
 
-        # update x, y positions of player
-        player['x'] += float(player['keys'][0]) * speed * multiplier  # direction * speed * multiplier
-        player['y'] += float(player['keys'][1]) * speed * multiplier  # direction * speed * multiplier
+    # update x, y positions of player
+    player['x'] += float(player['keys'][0]) * speed * multiplier  # direction * speed * multiplier
+    player['y'] += float(player['keys'][1]) * speed * multiplier  # direction * speed * multiplier
+
+    if (player['x'] < 0):
+        player['x'] -= player['x']
+    elif (player['x'] > game_size):
+        player['x'] -= (player['x'] - game_size)
+    elif (player['y'] < 0):
+        player['y'] -= player['y']
+    elif (player['y'] > game_size):
+        player['y'] -= (player['y'] - game_size)
+
     socketio.sleep()
 
 def background_checkattack(player):
@@ -104,7 +105,7 @@ def background_UPDATEPOSITIONS():
             socketio.start_background_task(collisionPlayer, player)
             if (player['attack'] == True and player['attacktime'] <= counter):
                 socketio.start_background_task(background_checkattack, player)
-        socketio.sleep(.01) # ... this should work? may need to implement some sort of setTimeout system to avoid
+        socketio.sleep(.015) # ... this should work? may need to implement some sort of setTimeout system to avoid
                             # slowdown if many players. Have to research more into how socketio.sleep works
 
 def collisionTree(player):
