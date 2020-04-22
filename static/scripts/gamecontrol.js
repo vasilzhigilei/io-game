@@ -219,11 +219,14 @@ async function drawLayout() {
     // everything else in game will be moved by deltaX and deltaY
     players.forEach(function (player) {
         if(player['id'] == socket.io.engine.id){
+            context.fillStyle = 'rgba(255, 255, 255, .6)';
+            context.fillRect( player.x + canvas.width/2 - 130, player.y + canvas.height/2 - 90, 100, 60);
+            context.drawImage(woodImage, player.x + canvas.width/2 - 120, player.y + canvas.height/2 - 100, 80, 80);
             context.textBaseline = "middle";
             context.textAlign = "center";
             context.font = "bold 20px sans-serif";
-            context.fillStyle = 'rgba(255, 255, 255, 1)';
-            context.fillText(player.name, player.x + canvas.width/2, player.y + canvas.height/2);
+            context.fillStyle = 'rgb(255,255,255)';
+            context.fillText(player.wood, player.x + canvas.width/2 - 85, player.y + canvas.height/2 - 60);
             return;
         };
     });
