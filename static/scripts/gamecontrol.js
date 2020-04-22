@@ -221,6 +221,8 @@ async function drawLayout() {
         if(player['id'] == socket.io.engine.id){
             context.fillStyle = 'rgba(255, 255, 255, .6)';
             context.fillRect( player.x + canvas.width/2 - 130, player.y + canvas.height/2 - 90, 100, 60);
+            context.strokeStyle = "#935f00";
+            context.strokeRect( player.x + canvas.width/2 - 130, player.y + canvas.height/2 - 90, 100, 60);
             context.drawImage(woodImage, player.x + canvas.width/2 - 120, player.y + canvas.height/2 - 100, 80, 80);
             context.textBaseline = "middle";
             context.textAlign = "center";

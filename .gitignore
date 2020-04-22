@@ -1,0 +1,5 @@
+# Untracked folders
+.idea/
+
+# Untracked files
+*.pyc
