@@ -30,7 +30,9 @@ world = gamegen.generateWorld(size=game_size, seed=datetime.datetime.now())
 def home():
     return render_template("index.html")
 
-# dict format: {'id':str, 'name':str, 'x':int, 'y':int, 'angle':float, 'attack':bool, 'attacktime':int, 'keys':list, health':int}
+# dict format:
+# {'id':str, 'name':str, 'x':int, 'y':int, 'angle':float, 'attack':bool, 'attacktime':int, 'keys':list, health':int,
+# 'wood':int}
 players = []
 speed = 6.0 # universal speed set to 3 pixels
 @socketio.on('playerinfo')
@@ -82,6 +84,15 @@ def background_checkattack(player):
                     else:
                         enemy['health'] = 0;
                         die(enemy);
+    for tree in world['trees']:
+        if (distance_objectobject(tree, player) < 130):
+            radians = math.atan2(tree['y'] - player['y'], tree['x'] - player['x'])
+            anglefromfacing = math.fabs(player['angle'] - radians)
+            if (anglefromfacing > math.pi):
+                anglefromfacing = (anglefromfacing - 2 * math.pi)
+            if (anglefromfacing < .4):
+                player['wood'] += 1
+
     player['attacktime'] = counter + 50;
     socketio.sleep()
 
@@ -135,7 +146,8 @@ def joingame(data):
     id = request.sid
     x = random.randrange(game_size)
     y = random.randrange(game_size)
-    players.append({'id': id, 'name': data['name'], 'x': x, 'y': y, 'angle': 0, 'attack': False, 'attacktime': 0, 'keys': [0, 0], 'health':100})
+    players.append({'id': id, 'name': data['name'], 'x': x, 'y': y, 'angle': 0, 'attack': False, 'attacktime': 0,
+                    'keys': [0, 0], 'health':100, 'wood':0})
     emit('confirm', {'data': 'new player, ' + id})
     emit('world', {'world': world})
     print('new player: ' + id)
