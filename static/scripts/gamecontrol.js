@@ -44,6 +44,9 @@ treeImage.src = "static/resources/palmtree.png";
 var coconutImage = new Image();
 coconutImage.src = "static/resources/coconuts.png";
 
+var woodImage = new Image();
+woodImage.src = "static/resources/wood.png";
+
 var multiplier = 1;
 function gameLoop() {
     if (keyState[37] || keyState[65]){
@@ -108,6 +111,7 @@ function gameLoop() {
     drawPlayers();
     drawUser(); // draw circle must go second to last to overlay on top of other objects
     drawTrees(); // drawn last to let leaves overlay on top of players
+    drawLayout(); // ui layout
     counter++;
     // reset before next loop
     keys = [0, 0];
@@ -206,10 +210,20 @@ async function drawUser() {
             context.font = "bold 30px sans-serif";
             context.fillStyle = 'rgba(255, 255, 255, 1)';
             context.fillText(player.name, player.x, player.y);
-            //context.lineWidth = 1;
-            //context.strokeStyle = 'rgba(200, 200, 200, 1)';
-            //context.strokeText(player.name, player.x, player.y-80);
-            //context.filter = "opacity(1)";
+            return;
+        };
+    });
+}
+
+async function drawLayout() {
+    // everything else in game will be moved by deltaX and deltaY
+    players.forEach(function (player) {
+        if(player['id'] == socket.io.engine.id){
+            context.textBaseline = "middle";
+            context.textAlign = "center";
+            context.font = "bold 20px sans-serif";
+            context.fillStyle = 'rgba(255, 255, 255, 1)';
+            context.fillText(player.name, player.x + canvas.width/2, player.y + canvas.height/2);
             return;
         };
     });
