@@ -77,8 +77,8 @@ def background_checkattack(player):
                 radians = math.atan2(enemy['y'] - player['y'], enemy['x'] - player['x'])
                 anglefromfacing = math.fabs(player['angle'] - radians)
                 if(anglefromfacing > math.pi):
-                    anglefromfacing = (anglefromfacing - 2*math.pi)
-                if(anglefromfacing < .4):
+                    anglefromfacing = (anglefromfacing - math.pi)
+                if(anglefromfacing < .6):
                     if(enemy['health'] > 10):
                         enemy['health'] -= 10;
                     else:
@@ -89,8 +89,8 @@ def background_checkattack(player):
             radians = math.atan2(tree['y'] - player['y'], tree['x'] - player['x'])
             anglefromfacing = math.fabs(player['angle'] - radians)
             if (anglefromfacing > math.pi):
-                anglefromfacing = (anglefromfacing - 2 * math.pi)
-            if (anglefromfacing < .4):
+                anglefromfacing = (anglefromfacing - math.pi)
+            if (anglefromfacing < .6):
                 player['wood'] += 1
 
     player['attacktime'] = counter + 50;
