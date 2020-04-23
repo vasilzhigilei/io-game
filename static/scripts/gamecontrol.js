@@ -47,6 +47,9 @@ coconutImage.src = "static/resources/coconuts.png";
 var woodImage = new Image();
 woodImage.src = "static/resources/wood.png";
 
+var foodImage = new Image();
+foodImage.src = "static/resources/mango.png";
+
 var multiplier = 1;
 function gameLoop() {
     if (keyState[37] || keyState[65]){
@@ -219,7 +222,7 @@ async function drawLayout() {
     // everything else in game will be moved by deltaX and deltaY
     players.forEach(function (player) {
         if(player['id'] == socket.io.engine.id){
-            context.fillStyle = 'rgba(255, 255, 255, .6)';
+            context.fillStyle = 'rgba(123,123,123,0.6)';
             context.fillRect( player.x + canvas.width/2 - 130, player.y + canvas.height/2 - 90, 100, 60);
             context.strokeStyle = "#935f00";
             context.strokeRect( player.x + canvas.width/2 - 130, player.y + canvas.height/2 - 90, 100, 60);
@@ -228,7 +231,18 @@ async function drawLayout() {
             context.textAlign = "center";
             context.font = "bold 20px sans-serif";
             context.fillStyle = 'rgb(255,255,255)';
-            context.fillText(player.wood, player.x + canvas.width/2 - 85, player.y + canvas.height/2 - 60);
+            context.fillText(player.wood, player.x + canvas.width/2 - 80, player.y + canvas.height/2 - 57);
+
+            context.fillStyle = 'rgba(123,123,123,0.6)';
+            context.fillRect( player.x + canvas.width/2 - 130, player.y + canvas.height/2 - 180, 100, 60);
+            context.strokeStyle = "#dbc712";
+            context.strokeRect( player.x + canvas.width/2 - 130, player.y + canvas.height/2 - 180, 100, 60);
+            context.drawImage(foodImage, player.x + canvas.width/2 - 112, player.y + canvas.height/2 - 180, 60, 60);
+            context.textBaseline = "middle";
+            context.textAlign = "center";
+            context.font = "bold 20px sans-serif";
+            context.fillStyle = 'rgb(255,255,255)';
+            context.fillText(player.food, player.x + canvas.width/2 - 82, player.y + canvas.height/2 - 147);
             return;
         };
     });

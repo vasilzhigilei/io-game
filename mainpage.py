@@ -32,7 +32,7 @@ def home():
 
 # dict format:
 # {'id':str, 'name':str, 'x':int, 'y':int, 'angle':float, 'attack':bool, 'attacktime':int, 'keys':list, health':int,
-# 'wood':int}
+# 'wood':int, 'food':int}
 players = []
 speed = 6.0 # universal speed set to 3 pixels
 @socketio.on('playerinfo')
@@ -92,6 +92,10 @@ def background_checkattack(player):
                 anglefromfacing = (anglefromfacing - math.pi)
             if (anglefromfacing < .6):
                 player['wood'] += 1
+                for coconut in world['coconuts']:
+                    if(coconut['y'] == tree['y'] and coconut['x'] == tree['x']):
+                        player['food'] += 1
+                        break
 
     player['attacktime'] = counter + 50;
     socketio.sleep()
@@ -147,7 +151,7 @@ def joingame(data):
     x = random.randrange(game_size)
     y = random.randrange(game_size)
     players.append({'id': id, 'name': data['name'], 'x': x, 'y': y, 'angle': 0, 'attack': False, 'attacktime': 0,
-                    'keys': [0, 0], 'health':100, 'wood':0})
+                    'keys': [0, 0], 'health':100, 'wood':0, 'food':0})
     emit('confirm', {'data': 'new player, ' + id})
     emit('world', {'world': world})
     print('new player: ' + id)
