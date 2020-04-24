@@ -18,10 +18,13 @@ def generateWorld(size, seed, version=2): # takes seed, version=2 means it allow
 
     for i in range(blockedsize):
         for j in range(blockedsize):
+            skipj = False
             for water in world['water']:
-                if j > water['y']/block - 1 and j < water['y']/block + water['height']/block + 1:
-                    j = water['y']/block + water['height']/block + 1
+                if j*block > water['y'] - 3*block and j*block < water['y'] + water['height'] + 3*block:
+                    skipj = True
                     break
+            if skipj:
+                continue
             if(random.randint(0, 500) == 0):
                 tooclose = False
                 for tree in world['trees']:
