@@ -249,3 +249,11 @@ async function drawLayout() {
     });
 }
 
+async function drawWater() {
+    // everything else in game will be moved by deltaX and deltaY
+    world['water'].forEach(function (water) {
+        context.fillStyle = 'rgba(15,56,255,0.75)';
+        context.fillRect(0, water.y, water.width, water.height);
+        return;
+    });
+}

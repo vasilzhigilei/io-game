@@ -14,13 +14,13 @@ def generateWorld(size, seed, version=2): # takes seed, version=2 means it allow
 
     height = random.randint(100, 500)
     y = random.randint(0, size-height)
-    world['water'].append({'y': y, 'height': height})
+    world['water'].append({'y': y, 'width':size, 'height': height})
 
     for i in range(blockedsize):
         for j in range(blockedsize):
             for water in world['water']:
-                if j > water['y'] and j < water['y'] + water['height']:
-                    j = water['y'] + water['height']
+                if j > water['y']/block - 1 and j < water['y']/block + water['height']/block + 1:
+                    j = water['y']/block + water['height']/block + 1
                     break
             if(random.randint(0, 500) == 0):
                 tooclose = False
