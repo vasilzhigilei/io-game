@@ -111,6 +111,7 @@ function gameLoop() {
     counter++;
     // redraw all objects here
     clear();
+    drawWater();
     drawPlayers();
     drawUser(); // draw circle must go second to last to overlay on top of other objects
     drawTrees(); // drawn last to let leaves overlay on top of players
@@ -247,3 +248,4 @@ async function drawLayout() {
         };
     });
 }
+
