@@ -255,7 +255,7 @@ async function drawWater() {
         context.fillStyle = 'rgba(238,185,142,0.9)';
         context.fillRect(0, water.y-30, water.width, water.height+60);
         context.fillStyle = 'rgba(15,56,255,0.75)';
-        context.fillRect(0, water.y, water.width, water.height);
+        context.fillRect(0, water.y + 5*Math.sin((counter%200)/200 * 2*Math.PI), water.width, water.height);
         return;
     });
 }
