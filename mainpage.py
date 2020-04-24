@@ -76,8 +76,8 @@ def background_checkattack(player):
             if(distance_objectobject(enemy, player) < 130):
                 radians = math.atan2(enemy['y'] - player['y'], enemy['x'] - player['x'])
                 anglefromfacing = math.fabs(player['angle'] - radians)
-                if(anglefromfacing > math.pi):
-                    anglefromfacing = (anglefromfacing - math.pi)
+                if(anglefromfacing > math.pi): # only allows angle to be 0 to pi
+                    anglefromfacing = math.fabs(anglefromfacing - 2*math.pi)
                 if(anglefromfacing < .6):
                     if(enemy['health'] > 10):
                         enemy['health'] -= 10;
@@ -88,8 +88,8 @@ def background_checkattack(player):
         if (distance_objectobject(tree, player) < 130):
             radians = math.atan2(tree['y'] - player['y'], tree['x'] - player['x'])
             anglefromfacing = math.fabs(player['angle'] - radians)
-            if (anglefromfacing > math.pi):
-                anglefromfacing = (anglefromfacing - math.pi)
+            if (anglefromfacing > math.pi): # only allows angle to be 0 to pi
+                anglefromfacing = math.fabs(anglefromfacing - 2*math.pi)
             if (anglefromfacing < .6):
                 player['wood'] += 1
                 for coconut in world['coconuts']:
