@@ -59,14 +59,14 @@ def background_playerupdate(player):
     player['x'] += float(player['keys'][0]) * speed * multiplier  # direction * speed * multiplier
     player['y'] += float(player['keys'][1]) * speed * multiplier  # direction * speed * multiplier
 
-    if (player['x'] < 0):
-        player['x'] -= player['x']
-    elif (player['x'] > game_size):
-        player['x'] -= (player['x'] - game_size)
-    elif (player['y'] < 0):
-        player['y'] -= player['y']
-    elif (player['y'] > game_size):
-        player['y'] -= (player['y'] - game_size)
+    if (player['x'] - 45 < 0):
+        player['x'] -= player['x'] - 45
+    elif (player['x'] + 45 > game_size):
+        player['x'] -= (player['x'] + 45 - game_size)
+    if (player['y'] - 45 < 0):
+        player['y'] -= player['y'] - 45
+    elif (player['y'] + 45 > game_size):
+        player['y'] -= (player['y'] + 45 - game_size)
 
     socketio.sleep()
 
@@ -80,10 +80,10 @@ def background_checkattack(player):
                     anglefromfacing = math.fabs(anglefromfacing - 2*math.pi)
                 if(anglefromfacing < .6):
                     if(enemy['health'] > 10):
-                        enemy['health'] -= 10;
+                        enemy['health'] -= 10
                     else:
-                        enemy['health'] = 0;
-                        die(enemy);
+                        enemy['health'] = 0
+                        die(enemy)
     for tree in world['trees']:
         if (distance_objectobject(tree, player) < 130):
             radians = math.atan2(tree['y'] - player['y'], tree['x'] - player['x'])
@@ -118,6 +118,7 @@ def background_UPDATEPOSITIONS():
             socketio.start_background_task(background_playerupdate, player)
             socketio.start_background_task(collisionTree, player)
             socketio.start_background_task(collisionPlayer, player)
+            socketio.start_background_task(collisionWater, player)
             if (player['attack'] == True and player['attacktime'] <= counter):
                 socketio.start_background_task(background_checkattack, player)
         socketio.sleep(.015) # ... this should work? may need to implement some sort of setTimeout system to avoid
@@ -145,6 +146,12 @@ def collisionPlayer(player):
                 otherplayer['x'] += math.cos(otherradians) * depth
                 otherplayer['y'] += math.sin(otherradians) * depth
 
+def collisionWater(player):
+    for water in world['water']:
+        if player['y'] > water['y'] and player['y'] < water['y'] + water['height']:
+            if player['x'] < game_size:
+                player['x'] += 5
+
 @socketio.on('joingame')
 def joingame(data):
     id = request.sid
@@ -165,7 +172,6 @@ def connect():
     with thread_lock:
         if thread is None:
             thread = socketio.start_background_task(target=background_UPDATEALL)
-
 
 @socketio.on('disconnect')
 def disconnect():
