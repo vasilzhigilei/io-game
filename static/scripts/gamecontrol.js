@@ -115,6 +115,7 @@ function gameLoop() {
     drawPlayers();
     drawUser(); // draw circle must go second to last to overlay on top of other objects
     drawTrees(); // drawn last to let leaves overlay on top of players
+    drawBorder();
     drawLayout(); // ui layout
     counter++;
     // reset before next loop
@@ -258,4 +259,21 @@ async function drawWater() {
         context.fillRect(-canvas.width/2, water.y + 4*Math.sin((counter%250)/250 * 2*Math.PI), water.width+canvas.width, water.height);
         return;
     });
+}
+
+async function drawBorder(){
+    context.fillStyle = 'rgba(66,66,66,0.38)';
+
+    // up rectangle (SHORT)
+    context.fillRect(0, -canvas.height/2, world.size, canvas.height/2);
+
+    // down rectangle (SHORT)
+    context.fillRect(0, world.size, world.size, canvas.height/2);
+
+    // left rectangle (LONG)
+    context.fillRect(-canvas.width/2, -canvas.height/2, canvas.width/2, world.size + canvas.height);
+
+    // right rectangle (LONG)
+    context.fillRect(world.size, -canvas.height/2, canvas.width/2, world.size + canvas.height);
+    return;
 }

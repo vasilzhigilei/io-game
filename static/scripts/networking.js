@@ -7,7 +7,7 @@ socket.on('confirm', function(data) {
 
 var players = [];
 // 2000x2000 pixel default world for main menu screen. Yeah. Really long line. Needs to get updated if new object implemented
-var world = {'water':[], 'trees':[], 'coconuts':[]};
+var world = {'size': 2000, 'water':[], 'trees':[], 'coconuts':[]};
 
 var x_client = 1500;
 var y_client = 1500;

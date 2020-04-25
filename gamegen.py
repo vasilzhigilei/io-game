@@ -4,7 +4,7 @@ from helper import distance_objectpos
 def generateWorld(size, seed, version=2): # takes seed, version=2 means it allows strings/bytes/ints
     random.seed(seed)
 
-    world = {'water':[], 'trees':[], 'coconuts':[]}
+    world = {'size': size, 'water':[], 'trees':[], 'coconuts':[]}
 
     chance = 300
 
