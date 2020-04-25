@@ -201,13 +201,16 @@ async function drawPlayers() {
 }
 
 async function drawUser() {
-    // everything else in game will be moved by deltaX and deltaY
     players.forEach(function (player) {
         if(player['id'] == socket.io.engine.id){
             // hand drawing
             if(attack){
                 attackoffsetLocal = attackoffset;
                 attackoffsetLocal2 = attackoffset2;
+            }
+            if(eat && attack){
+                attackoffsetLocal = 9;
+                attackoffsetLocal2 = 9;
             }
             context.beginPath();
             context.arc(x_client + 45 * Math.cos(angle-.75+attackoffsetLocal/40), y_client + 45 * Math.sin(angle-.75 + attackoffsetLocal/40), 20, 0, 2* Math.PI, false);
@@ -220,6 +223,13 @@ async function drawUser() {
             context.arc(x_client + 45 * Math.cos(angle+.75-attackoffsetLocal2/40), y_client + 45 * Math.sin(angle+.75-attackoffsetLocal2/40), 20, 0, 2* Math.PI, false);
             context.fill();
             context.stroke();
+            if(eat){
+                context.save();
+                context.translate(x_client, y_client);
+                context.rotate(angle-.75+attackoffsetLocal/40);
+                context.drawImage(mangoImage, 45 - 25, 45 - 25, 50, 50);
+                context.restore();
+            }
 
             //context.filter = "opacity(.5)"; // REALLY BAD PERFORMANCE, was just playing around with filters
             context.beginPath();
