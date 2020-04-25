@@ -27,7 +27,6 @@ canvas.addEventListener('mousedown', async() => {
     keypressed = true;
     attack = true;
     startattack = counter;
-
 }, false);
 canvas.addEventListener('mouseup', async() => {
     attack = false;
@@ -37,6 +36,7 @@ canvas.addEventListener('mouseup', async() => {
 }, false);
 
 var keys = [0, 0];
+var eat = false;
 
 var treeImage = new Image();
 treeImage.src = "static/resources/palmtree.png";
@@ -80,12 +80,21 @@ function gameLoop() {
         }
     }
 
+    if(keyState[50]){
+        eat = true;
+        keypressed = true;
+    }
+    if(keyState[49]){
+        eat = false;
+        keypressed = true;
+    }
+
     if(keys[0] != 0 || keys[1] != 0){
         keypressed = true;
     }
 
    if(counter % 5 == 0){ // only send update of position if keypressed is true
-        socket.emit('playerinfo', {'keys':keys, 'angle': angle, 'attack': attack});
+        socket.emit('playerinfo', {'keys':keys, 'angle': angle, 'attack': attack, 'eat': eat});
         if(attack == false){
             keypressed = false;
         }

@@ -32,7 +32,7 @@ def home():
 
 # dict format:
 # {'id':str, 'name':str, 'x':int, 'y':int, 'angle':float, 'attack':bool, 'attacktime':int, 'keys':list, health':int,
-# 'wood':int, 'food':int}
+# 'wood':int, 'food':int, 'eat':bool}
 players = []
 @socketio.on('playerinfo')
 def playerinfo(data):
@@ -47,6 +47,7 @@ def playerinfo(data):
         player['keys'] = data['keys']
         player['angle'] = data['angle']
         player['attack'] = data['attack']
+        player['eat'] = data['eat']
 
 def background_playerupdate(player):
     # check if diagonal movement or not to keep speed consistent
@@ -76,31 +77,41 @@ def background_playerupdate(player):
     socketio.sleep()
 
 def background_checkattack(player):
-    for enemy in players:
-        if(enemy['id'] != player['id']):
-            if(distance_objectobject(enemy, player) < 130):
-                radians = math.atan2(enemy['y'] - player['y'], enemy['x'] - player['x'])
+    if player['eat']:
+        if player['health'] < 100:
+            if player['food'] >= 10:
+                if player['health'] <= 90:
+                    player['health'] += 20
+                    player['food'] -= 10
+                else:
+                    player['health'] = 100
+                    player['food'] -= 100 - player['health']
+    else:
+        for enemy in players:
+            if(enemy['id'] != player['id']):
+                if(distance_objectobject(enemy, player) < 130):
+                    radians = math.atan2(enemy['y'] - player['y'], enemy['x'] - player['x'])
+                    anglefromfacing = math.fabs(player['angle'] - radians)
+                    if(anglefromfacing > math.pi): # only allows angle to be 0 to pi
+                        anglefromfacing = math.fabs(anglefromfacing - 2*math.pi)
+                    if(anglefromfacing < .6):
+                        if(enemy['health'] > 10):
+                            enemy['health'] -= 10
+                        else:
+                            enemy['health'] = 0
+                            die(enemy)
+        for tree in world['trees']:
+            if (distance_objectobject(tree, player) < 130):
+                radians = math.atan2(tree['y'] - player['y'], tree['x'] - player['x'])
                 anglefromfacing = math.fabs(player['angle'] - radians)
-                if(anglefromfacing > math.pi): # only allows angle to be 0 to pi
+                if (anglefromfacing > math.pi): # only allows angle to be 0 to pi
                     anglefromfacing = math.fabs(anglefromfacing - 2*math.pi)
-                if(anglefromfacing < .6):
-                    if(enemy['health'] > 10):
-                        enemy['health'] -= 10
-                    else:
-                        enemy['health'] = 0
-                        die(enemy)
-    for tree in world['trees']:
-        if (distance_objectobject(tree, player) < 130):
-            radians = math.atan2(tree['y'] - player['y'], tree['x'] - player['x'])
-            anglefromfacing = math.fabs(player['angle'] - radians)
-            if (anglefromfacing > math.pi): # only allows angle to be 0 to pi
-                anglefromfacing = math.fabs(anglefromfacing - 2*math.pi)
-            if (anglefromfacing < .6):
-                player['wood'] += 1
-                for coconut in world['coconuts']:
-                    if(coconut['y'] == tree['y'] and coconut['x'] == tree['x']):
-                        player['food'] += 1
-                        break
+                if (anglefromfacing < .6):
+                    player['wood'] += 1
+                    for coconut in world['coconuts']:
+                        if(coconut['y'] == tree['y'] and coconut['x'] == tree['x']):
+                            player['food'] += 1
+                            break
 
     player['attacktime'] = counter + 50;
     socketio.sleep()
@@ -156,7 +167,7 @@ def joingame(data):
     x = random.randrange(game_size)
     y = random.randrange(game_size)
     players.append({'id': id, 'name': data['name'], 'x': x, 'y': y, 'angle': 0, 'attack': False, 'attacktime': 0,
-                    'keys': [0, 0], 'health':100, 'wood':0, 'food':0})
+                    'keys': [0, 0], 'health': 100, 'wood': 0, 'food': 0, 'eat': False})
     emit('confirm', {'data': 'new player, ' + id})
     emit('world', {'world': world})
     print('new player: ' + id)
