@@ -21,6 +21,8 @@ var counter = 0;
 var attack = false;
 var attackoffset = 0;
 var attackoffset2 = 0;
+var attackoffsetLocal = 0;
+var attackoffsetLocal2 = 0;
 var which = 0;
 var startattack = 0;
 canvas.addEventListener('mousedown', async() => {
@@ -100,7 +102,7 @@ function gameLoop() {
         }
     }
 
-    if(attack == true && counter % 20 == startattack % 20){
+    if(counter % 20 == startattack % 20){
         if(which == 0){
             attackoffset = 11;
             attackoffset2 = -2;
@@ -159,15 +161,19 @@ async function drawPlayers() {
     players.forEach(function (player) {
         if(player['id'] != socket.io.engine.id){
             // hand drawing
+            if(player.attack){
+                attackoffsetLocal = attackoffset;
+                attackoffsetLocal2 = attackoffset2;
+            }
             context.beginPath();
-            context.arc(player.x + 45 * Math.cos(player.angle-.75), player.y + 45 * Math.sin(player.angle-.75), 20, 0, 2* Math.PI, false);
-            context.fillStyle = 'rgba(170, 128, 85, 1)'; // original pink: rgba(255, 138, 128, 1)
+            context.arc(player.x + 45 * Math.cos(player.angle-.75+attackoffsetLocal/40), player.y + 45 * Math.sin(player.angle-.75 + attackoffsetLocal/40), 20, 0, 2* Math.PI, false);
+            context.fillStyle = 'rgba(170, 128, 85, 1)'; // original blue: rgba(59, 104, 225, 1)
             context.fill();
             context.lineWidth = 4;
-            context.strokeStyle = 'rgba(136, 102, 68, 1)'; // original pink: rgba(255, 111, 97, 1)
+            context.strokeStyle = 'rgba(136, 102, 68, 1)'; // original blue: rgba(42, 75, 225, 1)
             context.stroke();
             context.beginPath();
-            context.arc(player.x + 45 * Math.cos(player.angle+.75), player.y + 45 * Math.sin(player.angle+.75), 20, 0, 2* Math.PI, false);
+            context.arc(player.x + 45 * Math.cos(player.angle+.75-attackoffsetLocal2/40), player.y + 45 * Math.sin(player.angle+.75-attackoffsetLocal2/40), 20, 0, 2* Math.PI, false);
             context.fill();
             context.stroke();
 
@@ -188,6 +194,8 @@ async function drawPlayers() {
             context.font = "bold 30px sans-serif";
             context.fillStyle = 'rgba(255, 255, 255, 1)';
             context.fillText(player.name, player.x, player.y);
+            attackoffsetLocal = 0;
+            attackoffsetLocal2 = 0;
         };
     });
 }
@@ -197,15 +205,19 @@ async function drawUser() {
     players.forEach(function (player) {
         if(player['id'] == socket.io.engine.id){
             // hand drawing
+            if(attack){
+                attackoffsetLocal = attackoffset;
+                attackoffsetLocal2 = attackoffset2;
+            }
             context.beginPath();
-            context.arc(x_client + 45 * Math.cos(angle-.75+attackoffset/40), y_client + 45 * Math.sin(angle-.75 + attackoffset/40), 20, 0, 2* Math.PI, false);
+            context.arc(x_client + 45 * Math.cos(angle-.75+attackoffsetLocal/40), y_client + 45 * Math.sin(angle-.75 + attackoffsetLocal/40), 20, 0, 2* Math.PI, false);
             context.fillStyle = 'rgba(170, 128, 85, 1)'; // original blue: rgba(59, 104, 225, 1)
             context.fill();
             context.lineWidth = 4;
             context.strokeStyle = 'rgba(136, 102, 68, 1)'; // original blue: rgba(42, 75, 225, 1)
             context.stroke();
             context.beginPath();
-            context.arc(x_client + 45 * Math.cos(angle+.75-attackoffset2/40), y_client + 45 * Math.sin(angle+.75-attackoffset2/40), 20, 0, 2* Math.PI, false);
+            context.arc(x_client + 45 * Math.cos(angle+.75-attackoffsetLocal2/40), y_client + 45 * Math.sin(angle+.75-attackoffsetLocal2/40), 20, 0, 2* Math.PI, false);
             context.fill();
             context.stroke();
 
@@ -227,6 +239,8 @@ async function drawUser() {
             context.font = "bold 30px sans-serif";
             context.fillStyle = 'rgba(255, 255, 255, 1)';
             context.fillText(player.name, player.x, player.y);
+            attackoffsetLocal = 0;
+            attackoffsetLocal2 = 0;
             return;
         };
     });
