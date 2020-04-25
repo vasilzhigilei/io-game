@@ -225,9 +225,9 @@ async function drawUser() {
             context.stroke();
             if(eat){
                 context.save();
-                context.translate(x_client, y_client);
-                context.rotate(angle-.75+attackoffsetLocal/40);
-                context.drawImage(mangoImage, 45 - 25, 45 - 25, 50, 50);
+                context.translate(x_client + 55 * Math.cos(angle-.3+attackoffsetLocal/40), y_client + 55 * Math.sin(angle-.3+attackoffsetLocal/40));
+                context.rotate(angle + Math.PI/2);
+                context.drawImage(mangoImage, -25, -25, 50, 50);
                 context.restore();
             }
 
