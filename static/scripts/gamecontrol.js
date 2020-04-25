@@ -165,6 +165,10 @@ async function drawPlayers() {
                 attackoffsetLocal = attackoffset;
                 attackoffsetLocal2 = attackoffset2;
             }
+            if(player.eat && player.attack){
+                attackoffsetLocal = 9;
+                attackoffsetLocal2 = 9;
+            }
             context.beginPath();
             context.arc(player.x + 45 * Math.cos(player.angle-.75+attackoffsetLocal/40), player.y + 45 * Math.sin(player.angle-.75 + attackoffsetLocal/40), 20, 0, 2* Math.PI, false);
             context.fillStyle = 'rgba(170, 128, 85, 1)'; // original blue: rgba(59, 104, 225, 1)
@@ -176,6 +180,13 @@ async function drawPlayers() {
             context.arc(player.x + 45 * Math.cos(player.angle+.75-attackoffsetLocal2/40), player.y + 45 * Math.sin(player.angle+.75-attackoffsetLocal2/40), 20, 0, 2* Math.PI, false);
             context.fill();
             context.stroke();
+            if(player.eat){
+                context.save();
+                context.translate(player.x + 55 * Math.cos(player.angle-.3+attackoffsetLocal/40), player.y + 55 * Math.sin(player.angle-.3+attackoffsetLocal/40));
+                context.rotate(player.angle + Math.PI/2);
+                context.drawImage(mangoImage, -25, -25, 50, 50);
+                context.restore();
+            }
 
             context.beginPath();
             context.arc(player.x, player.y, 45, 0, 2 * Math.PI, false);
