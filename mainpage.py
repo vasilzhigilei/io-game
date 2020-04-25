@@ -126,7 +126,7 @@ def background_UPDATEPOSITIONS():
             if (player['attack'] == True and player['attacktime'] <= counter):
                 socketio.start_background_task(background_checkattack, player)
         socketio.sleep(.015) # ... this should work? may need to implement some sort of setTimeout system to avoid
-                            # slowdown if many players. Have to research more into how socketio.sleep works
+                             # slowdown if many players. Have to research more into how socketio.sleep works
 
 def collisionTree(player):
     for tree in world['trees']:
