@@ -50,6 +50,9 @@ woodImage.src = "static/resources/wood.png";
 var foodImage = new Image();
 foodImage.src = "static/resources/mango.png";
 
+var mangoImage = new Image();
+mangoImage.src = "static/resources/onemango.png";
+
 var multiplier = 1;
 function gameLoop() {
     if (keyState[37] || keyState[65]){
