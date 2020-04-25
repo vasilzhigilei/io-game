@@ -34,7 +34,6 @@ def home():
 # {'id':str, 'name':str, 'x':int, 'y':int, 'angle':float, 'attack':bool, 'attacktime':int, 'keys':list, health':int,
 # 'wood':int, 'food':int}
 players = []
-speed = 6.0 # universal speed set to 3 pixels
 @socketio.on('playerinfo')
 def playerinfo(data):
     # called by client to update player data for everyone
@@ -55,6 +54,12 @@ def background_playerupdate(player):
     if (player['keys'][0] != 0 and player['keys'][1] != 0):
         multiplier = .707
 
+    speed = 6.0
+    for water in world['water']:
+        if player['y'] > water['y'] and player['y'] < water['y'] + water['height']:
+            speed = 3
+            if player['x'] < game_size:
+                player['x'] += 2
     # update x, y positions of player
     player['x'] += float(player['keys'][0]) * speed * multiplier  # direction * speed * multiplier
     player['y'] += float(player['keys'][1]) * speed * multiplier  # direction * speed * multiplier
@@ -118,7 +123,6 @@ def background_UPDATEPOSITIONS():
             socketio.start_background_task(background_playerupdate, player)
             socketio.start_background_task(collisionTree, player)
             socketio.start_background_task(collisionPlayer, player)
-            socketio.start_background_task(collisionWater, player)
             if (player['attack'] == True and player['attacktime'] <= counter):
                 socketio.start_background_task(background_checkattack, player)
         socketio.sleep(.015) # ... this should work? may need to implement some sort of setTimeout system to avoid
@@ -145,12 +149,6 @@ def collisionPlayer(player):
                 player['y'] += math.sin(radians) * depth
                 otherplayer['x'] += math.cos(otherradians) * depth
                 otherplayer['y'] += math.sin(otherradians) * depth
-
-def collisionWater(player):
-    for water in world['water']:
-        if player['y'] > water['y'] and player['y'] < water['y'] + water['height']:
-            if player['x'] < game_size:
-                player['x'] += 5
 
 @socketio.on('joingame')
 def joingame(data):
