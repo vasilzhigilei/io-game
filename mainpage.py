@@ -25,6 +25,7 @@ random.seed() # for use of random on server aside from world generation
 
 game_size = 2500 # square size of playable area
 world = gamegen.generateWorld(size=game_size, seed=datetime.datetime.now())
+
 @app.route("/")
 @app.route("/index")
 def home():
@@ -102,7 +103,7 @@ def background_checkattack(player):
                     for coconut in world['coconuts']:
                         if(coconut['y'] == tree['y'] and coconut['x'] == tree['x']):
                             player['food'] += 1
-                            break
+                            return
     elif player['select'] == 1: # if eat
         if player['health'] < 100:
             if player['food'] >= 10:
@@ -112,9 +113,23 @@ def background_checkattack(player):
                 else:
                     player['health'] = 100
                     player['food'] -= 100 - player['health']
-
-    player['attacktime'] = counter + 50;
-    socketio.sleep()
+                player['attacktime'] = counter + 50;
+                return
+    elif player['select'] == 2: # if place wall
+        y = player['y'] + 55 * math.sin(player['angle'])
+        for water in world['water']:
+            if y > water['y'] and y < water['y'] + water['height']:
+                return # block would be in water, so don't place
+        x = player['x'] + 55*math.cos(player['angle'])
+        newwall = {'x': x, 'y': y} # creation of wall for usage in distance function and creation of wall
+        for tree in world['trees']:
+            if distance_objectobject(tree, newwall) < 45 + 45:
+                return # failed, wall would be in a tree!!!
+        for wall in world['walls']:
+            if distance_objectobject(wall, newwall) < 45 + 45:
+                return # failed, wall would be in another tree!!!
+        world['walls'].append(newwall)
+        socketio.emit('receiveUpdateWalls', {'walls': world['walls']}) # emit to all players the list of walls
 
 def die(player):
     socketio.emit('die', 'You died!', room=player['id'])
@@ -126,7 +141,7 @@ def background_UPDATEALL():
     while True:
         counter += 1 # may as well put this here, not accurate to time necessarily
         socketio.emit('receiveUpdate', {'players': players})
-        socketio.sleep(.01)
+        socketio.sleep(.015)
 
 def background_UPDATEPOSITIONS():
     while(True):
@@ -134,6 +149,7 @@ def background_UPDATEPOSITIONS():
             socketio.start_background_task(background_playerupdate, player)
             socketio.start_background_task(collisionTree, player)
             socketio.start_background_task(collisionPlayer, player)
+            socketio.start_background_task(collisionWall, player)
             if (player['attack'] == True and player['attacktime'] <= counter):
                 socketio.start_background_task(background_checkattack, player)
         socketio.sleep(.015) # ... this should work? may need to implement some sort of setTimeout system to avoid
@@ -147,6 +163,15 @@ def collisionTree(player):
             radians = math.atan2(player['y'] - tree['y'], player['x'] - tree['x'])
             player['x'] += math.cos(radians) * depth
             player['y'] += math.sin(radians) * depth
+
+def collisionWall(player):
+    for wall in world['walls']:
+        distance = distance_objectobject(player, wall)
+        depth = 45 + 50 - distance # sum of radii - distance
+        if(depth > 0): #if intersecting
+            radians = math.atan2(player['y'] - wall['y'], player['x'] - wall['x'])
+            player['x'] += math.cos(radians) * depth/2
+            player['y'] += math.sin(radians) * depth/2
 
 def collisionPlayer(player):
     for otherplayer in players:

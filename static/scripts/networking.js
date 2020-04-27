@@ -7,7 +7,7 @@ socket.on('confirm', function(data) {
 
 var players = [];
 // 2000x2000 pixel default world for main menu screen. Yeah. Really long line. Needs to get updated if new object implemented
-var world = {'size': 2000, 'water':[], 'trees':[], 'coconuts':[]};
+var world = {'size': 2000, 'water':[], 'trees':[], 'coconuts':[], 'walls':[]};
 
 var x_client = 1000;
 var y_client = 1000;
@@ -24,6 +24,10 @@ socket.on('receiveUpdate', async(data) => {
             y_client = player.y;
         }
     });
+});
+
+socket.on('receiveUpdateWalls', async(data) => {
+    world['walls'] = data['walls'];
 });
 
 socket.on('world', function(data) {

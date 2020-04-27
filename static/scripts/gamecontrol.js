@@ -135,6 +135,7 @@ function gameLoop() {
     drawWater();
     drawPlayers();
     drawUser(); // draw circle must go second to last to overlay on top of other objects
+    drawWalls();
     drawTrees(); // drawn last to let leaves overlay on top of players
     drawBorder();
     drawLayout(); // ui layout
@@ -161,6 +162,12 @@ async function drawTrees() {
     });
     world['coconuts'].forEach(function (coconut) {
         context.drawImage(coconutImage, coconut.x-100, coconut.y-100, 200, 200);
+    });
+}
+
+async function drawWalls() {
+    world['walls'].forEach(function (wall) {
+       context.drawImage(wallImage, wall['x']-100, wall['y']-100, 200, 200);
     });
 }
 
