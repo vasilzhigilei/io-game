@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, join_room, emit, send
+import os
+from flask import send_from_directory
 import eventlet
 from eventlet import wsgi
 import random
@@ -25,6 +27,11 @@ random.seed() # for use of random on server aside from world generation
 
 game_size = 2500 # square size of playable area
 world = gamegen.generateWorld(size=game_size, seed=datetime.datetime.now())
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='favicon.ico')
 
 @app.route("/")
 @app.route("/index")
