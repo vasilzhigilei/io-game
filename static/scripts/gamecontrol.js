@@ -38,7 +38,7 @@ canvas.addEventListener('mouseup', async() => {
 }, false);
 
 var keys = [0, 0];
-var eat = false;
+var select = 0; // select 0 - attack, 1 - eat, 2 - place wall
 
 var treeImage = new Image();
 treeImage.src = "static/resources/palmtree.png";
@@ -54,6 +54,9 @@ foodImage.src = "static/resources/mango.png";
 
 var mangoImage = new Image();
 mangoImage.src = "static/resources/onemango.png";
+
+var wallImage = new Image();
+wallImage.src = "static/resources/wall.png";
 
 var multiplier = 1;
 function gameLoop() {
@@ -82,12 +85,16 @@ function gameLoop() {
         }
     }
 
-    if(keyState[50]){
-        eat = true;
+    if(keyState[49]){ // press 1 - attack
+        select = 0;
         keypressed = true;
     }
-    if(keyState[49]){
-        eat = false;
+    if(keyState[50]){ // press 2 - eat
+        select = 1;
+        keypressed = true;
+    }
+    if(keyState[51]){ // press 3 - wall
+        select = 2;
         keypressed = true;
     }
 
@@ -96,7 +103,7 @@ function gameLoop() {
     }
 
    if(counter % 5 == 0){ // only send update of position if keypressed is true
-        socket.emit('playerinfo', {'keys':keys, 'angle': angle, 'attack': attack, 'eat': eat});
+        socket.emit('playerinfo', {'keys':keys, 'angle': angle, 'attack': attack, 'select': select});
         if(attack == false){
             keypressed = false;
         }
@@ -165,7 +172,7 @@ async function drawPlayers() {
                 attackoffsetLocal = attackoffset;
                 attackoffsetLocal2 = attackoffset2;
             }
-            if(player.eat && player.attack){
+            if(player.select != 0 && player.attack){
                 attackoffsetLocal = 9;
                 attackoffsetLocal2 = 9;
             }
@@ -180,11 +187,17 @@ async function drawPlayers() {
             context.arc(player.x + 45 * Math.cos(player.angle+.75-attackoffsetLocal2/40), player.y + 45 * Math.sin(player.angle+.75-attackoffsetLocal2/40), 20, 0, 2* Math.PI, false);
             context.fill();
             context.stroke();
-            if(player.eat){
+            if(player.select == 1){ // eat
                 context.save();
                 context.translate(player.x + 55 * Math.cos(player.angle-.3+attackoffsetLocal/40), player.y + 55 * Math.sin(player.angle-.3+attackoffsetLocal/40));
                 context.rotate(player.angle + Math.PI/2);
                 context.drawImage(mangoImage, -25, -25, 50, 50);
+                context.restore();
+            }else if(player.select == 2){ // wall
+                context.save();
+                context.translate(player.x + 55 * Math.cos(player.angle-.3+attackoffsetLocal/40), player.y + 55 * Math.sin(player.angle-.3+attackoffsetLocal/40));
+                context.rotate(player.angle + Math.PI/2);
+                context.drawImage(wallImage, -25, -25, 50, 50);
                 context.restore();
             }
 
@@ -219,7 +232,7 @@ async function drawUser() {
                 attackoffsetLocal = attackoffset;
                 attackoffsetLocal2 = attackoffset2;
             }
-            if(eat && attack){
+            if(select != 0 && attack){
                 attackoffsetLocal = 9;
                 attackoffsetLocal2 = 9;
             }
@@ -234,11 +247,17 @@ async function drawUser() {
             context.arc(x_client + 45 * Math.cos(angle+.75-attackoffsetLocal2/40), y_client + 45 * Math.sin(angle+.75-attackoffsetLocal2/40), 20, 0, 2* Math.PI, false);
             context.fill();
             context.stroke();
-            if(eat){
+            if(select == 1){ // if eat
                 context.save();
                 context.translate(x_client + 55 * Math.cos(angle-.3+attackoffsetLocal/40), y_client + 55 * Math.sin(angle-.3+attackoffsetLocal/40));
                 context.rotate(angle + Math.PI/2);
                 context.drawImage(mangoImage, -25, -25, 50, 50);
+                context.restore();
+            }else if(select == 2){ // wall
+                context.save();
+                context.translate(x_client + 55 * Math.cos(angle), y_client + 55 * Math.sin(angle));
+                context.rotate(angle + Math.PI/2);
+                context.drawImage(wallImage, -100, -100, 200, 200);
                 context.restore();
             }
 

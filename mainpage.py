@@ -47,7 +47,7 @@ def playerinfo(data):
         player['keys'] = data['keys']
         player['angle'] = data['angle']
         player['attack'] = data['attack']
-        player['eat'] = data['eat']
+        player['select'] = data['select']
 
 def background_playerupdate(player):
     # check if diagonal movement or not to keep speed consistent
@@ -77,16 +77,7 @@ def background_playerupdate(player):
     socketio.sleep()
 
 def background_checkattack(player):
-    if player['eat']:
-        if player['health'] < 100:
-            if player['food'] >= 10:
-                if player['health'] <= 90:
-                    player['health'] += 20
-                    player['food'] -= 10
-                else:
-                    player['health'] = 100
-                    player['food'] -= 100 - player['health']
-    else:
+    if player['select'] == 0: # if attack
         for enemy in players:
             if(enemy['id'] != player['id']):
                 if(distance_objectobject(enemy, player) < 130):
@@ -112,6 +103,15 @@ def background_checkattack(player):
                         if(coconut['y'] == tree['y'] and coconut['x'] == tree['x']):
                             player['food'] += 1
                             break
+    elif player['select'] == 1: # if eat
+        if player['health'] < 100:
+            if player['food'] >= 10:
+                if player['health'] <= 90:
+                    player['health'] += 20
+                    player['food'] -= 10
+                else:
+                    player['health'] = 100
+                    player['food'] -= 100 - player['health']
 
     player['attacktime'] = counter + 50;
     socketio.sleep()
@@ -167,7 +167,7 @@ def joingame(data):
     x = random.randrange(game_size)
     y = random.randrange(game_size)
     players.append({'id': id, 'name': data['name'], 'x': x, 'y': y, 'angle': 0, 'attack': False, 'attacktime': 0,
-                    'keys': [0, 0], 'health': 100, 'wood': 0, 'food': 0, 'eat': False})
+                    'keys': [0, 0], 'health': 100, 'wood': 0, 'food': 0, 'select': 0})
     emit('confirm', {'data': 'new player, ' + id})
     emit('world', {'world': world})
     print('new player: ' + id)
