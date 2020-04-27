@@ -130,6 +130,8 @@ def background_checkattack(player):
                 return # failed, wall would be in another tree!!!
         world['walls'].append(newwall)
         socketio.emit('receiveUpdateWalls', {'walls': world['walls']}) # emit to all players the list of walls
+        player['x'] -= math.cos(player['angle']) * 25
+        player['y'] -= math.sin(player['angle']) * 25
 
 def die(player):
     socketio.emit('die', 'You died!', room=player['id'])
@@ -170,8 +172,8 @@ def collisionWall(player):
         depth = 45 + 50 - distance # sum of radii - distance
         if(depth > 0): #if intersecting
             radians = math.atan2(player['y'] - wall['y'], player['x'] - wall['x'])
-            player['x'] += math.cos(radians) * depth/2
-            player['y'] += math.sin(radians) * depth/2
+            player['x'] += math.cos(radians) * depth
+            player['y'] += math.sin(radians) * depth
 
 def collisionPlayer(player):
     for otherplayer in players:
