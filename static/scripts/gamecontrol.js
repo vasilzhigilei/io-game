@@ -202,9 +202,9 @@ async function drawPlayers() {
                 context.restore();
             }else if(player.select == 2){ // wall
                 context.save();
-                context.translate(player.x + 55 * Math.cos(player.angle-.3+attackoffsetLocal/40), player.y + 55 * Math.sin(player.angle-.3+attackoffsetLocal/40));
+                context.translate(player.x + 55 * Math.cos(player.angle), player.y + 55 * Math.sin(player.angle));
                 context.rotate(player.angle + Math.PI/2);
-                context.drawImage(wallImage, -25, -25, 50, 50);
+                context.drawImage(wallImage, -100, -100, 200, 200);
                 context.restore();
             }
 

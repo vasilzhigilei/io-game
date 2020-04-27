@@ -79,6 +79,7 @@ def background_playerupdate(player):
 
 def background_checkattack(player):
     if player['select'] == 0: # if attack
+        player['attacktime'] = counter + 50;
         for enemy in players:
             if(enemy['id'] != player['id']):
                 if(distance_objectobject(enemy, player) < 130):
@@ -107,15 +108,17 @@ def background_checkattack(player):
     elif player['select'] == 1: # if eat
         if player['health'] < 100:
             if player['food'] >= 10:
+                player['attacktime'] = counter + 50;
                 if player['health'] <= 90:
                     player['health'] += 20
                     player['food'] -= 10
                 else:
                     player['health'] = 100
                     player['food'] -= 100 - player['health']
-                player['attacktime'] = counter + 50;
                 return
     elif player['select'] == 2: # if place wall
+        if player['wood'] < 10:
+            return # failed, not enough wood!
         y = player['y'] + 55 * math.sin(player['angle'])
         for water in world['water']:
             if y > water['y'] and y < water['y'] + water['height']:
@@ -132,6 +135,7 @@ def background_checkattack(player):
         socketio.emit('receiveUpdateWalls', {'walls': world['walls']}) # emit to all players the list of walls
         player['x'] -= math.cos(player['angle']) * 25
         player['y'] -= math.sin(player['angle']) * 25
+        player['wood'] -= 10
 
 def die(player):
     socketio.emit('die', 'You died!', room=player['id'])
