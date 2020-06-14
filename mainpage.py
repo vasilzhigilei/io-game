@@ -84,7 +84,14 @@ def background_playerupdate(player):
 
     socketio.sleep()
 
+
 def background_checkattack(player):
+    """
+    Background running function to check player attack
+    Checks for player click action (attack, eat, place), and conducts logic accordingly
+    :param player: Given player
+    :return: None
+    """
     if player['select'] == 0: # if attack
         player['attacktime'] = counter + 50;
         for enemy in players:
@@ -145,10 +152,20 @@ def background_checkattack(player):
         player['wood'] -= 10
 
 def die(player):
+    """
+    Kills the player
+    :param player: Given player to delete from players list
+    :return: None
+    """
     socketio.emit('die', 'You died!', room=player['id'])
     players.remove(player)
 
 def background_UPDATEALL():
+    """
+    Broadcasts world data to all connected clients
+    Runs infinitely
+    :return: None
+    """
     global counter
     socketio.start_background_task(target=background_UPDATEPOSITIONS)
     while True:
@@ -157,6 +174,11 @@ def background_UPDATEALL():
         socketio.sleep(.015)
 
 def background_UPDATEPOSITIONS():
+    """
+    Updates all player positions, checks collisions with other players, trees, walls
+    Runs infinitely
+    :return: None
+    """
     while(True):
         for player in players:
             socketio.start_background_task(background_playerupdate, player)
@@ -169,6 +191,11 @@ def background_UPDATEPOSITIONS():
                              # slowdown if many players. Have to research more into how socketio.sleep works
 
 def collisionTree(player):
+    """
+    Helper function to detect tree collision and perform the corresponding collision resolution
+    :param player: Given player
+    :return: None
+    """
     for tree in world['trees']:
         distance = distance_objectobject(player, tree)
         depth = 45 + 50 - distance # sum of radii - distance
@@ -178,6 +205,11 @@ def collisionTree(player):
             player['y'] += math.sin(radians) * depth
 
 def collisionWall(player):
+    """
+    Helper function to detect wall collision and perform the corresponding collision resolution
+    :param player: Given player
+    :return: None
+    """
     for wall in world['walls']:
         distance = distance_objectobject(player, wall)
         depth = 45 + 50 - distance # sum of radii - distance
@@ -187,6 +219,11 @@ def collisionWall(player):
             player['y'] += math.sin(radians) * depth
 
 def collisionPlayer(player):
+    """
+    Helper function to detect player collision and perform the corresponding collision resolution
+    :param player: Given player
+    :return: None
+    """
     for otherplayer in players:
         if (otherplayer['id'] != player['id']):
             distance = distance_objectobject(player, otherplayer)
