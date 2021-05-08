@@ -4,7 +4,7 @@ cryptography==2.3
 dlib==19.19.0
 dnspython==1.16.0
 enum34==1.1.10
-eventlet==0.25.2
+eventlet==0.31.0
 Flask==1.1.2
 Flask-SocketIO==4.2.1
 greenlet==0.4.15
